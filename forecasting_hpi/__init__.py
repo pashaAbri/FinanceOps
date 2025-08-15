@@ -13,7 +13,7 @@ Key Components:
 
 Usage:
     from forecasting_hpi import HPIForecastingWorkflow
-    from forecasting_hpi.models.data import DataLoader
+    from forecasting_hpi.models.input_data import DataLoader
     from forecasting_hpi.models.modeling import ForecastModel
 """
 

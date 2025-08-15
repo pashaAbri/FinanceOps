@@ -45,6 +45,11 @@ from forecasting_hpi.models.modeling.step_3_forecast_generation import (
     ForecastGenerator, generate_forecasts, create_forecast_generator
 )
 
+# Modeling pipeline for orchestrating all steps
+from forecasting_hpi.models.modeling.modeling_pipeline import (
+    HPIModelingPipeline, run_modeling_pipeline, create_modeling_pipeline
+)
+
 __all__ = [
     # Main interface (backward compatible)
     'ForecastModel', 
@@ -76,5 +81,10 @@ __all__ = [
     'create_model_evaluation_engine',
     'ForecastGenerator',
     'generate_forecasts',
-    'create_forecast_generator'
+    'create_forecast_generator',
+    
+    # Modeling pipeline
+    'HPIModelingPipeline',
+    'run_modeling_pipeline',
+    'create_modeling_pipeline'
 ]

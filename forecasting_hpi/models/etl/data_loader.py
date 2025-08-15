@@ -59,9 +59,21 @@ class DataLoader:
     
     def load_cpi(self) -> pd.Series:
         """Load Consumer Price Index from external module."""
-        # Import from the main data module (path already configured)
-        from data import load_usa_cpi
-        return load_usa_cpi()
+        # Import from the main data module at project root
+        import sys
+        import os
+        import importlib.util
+        
+        # Get the path to the main data.py file
+        project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+        data_file_path = os.path.join(project_root, 'data.py')
+        
+        # Load the data module from the specific file
+        spec = importlib.util.spec_from_file_location("main_data", data_file_path)
+        main_data = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(main_data)
+        
+        return main_data.load_usa_cpi()
     
     def load_hpi(self) -> pd.Series:
         """Load House Price Index data."""
@@ -86,8 +98,18 @@ class DataLoader:
     
     def load_mortgage_rate(self) -> pd.Series:
         """Load 30-year mortgage rate data."""
-        # Import from the main data module (path already configured)
-        from data import _resample_daily
+        # Import from the main data module at project root
+        import os
+        import importlib.util
+        
+        # Get the path to the main data.py file
+        project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+        data_file_path = os.path.join(project_root, 'data.py')
+        
+        # Load the data module from the specific file
+        spec = importlib.util.spec_from_file_location("main_data", data_file_path)
+        main_data = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(main_data)
         
         data = self._load_data(
             filename=self.files['mortgage_rate'],
@@ -96,7 +118,7 @@ class DataLoader:
         # Convert percentage to decimal
         data /= 100.0
         # Resample to daily data
-        data = _resample_daily(data)
+        data = main_data._resample_daily(data)
         return data
     
     def load_all_data(self) -> Dict[str, pd.Series]:

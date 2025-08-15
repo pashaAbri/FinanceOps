@@ -16,6 +16,7 @@ from forecasting_hpi.models.etl import HPIETLPipeline
 from forecasting_hpi.models.modeling import (
     ForecastModel, print_statistics,
     ModelPrinter, ModelComparison,
+    HPIModelingPipeline,
     train_forecasting_models,
     evaluate_forecasting_models,
     generate_forecasts
@@ -33,14 +34,16 @@ class HPIForecastingWorkflow:
         with open(config_path, 'r') as f:
             self.config = json.load(f)
         
-        # Initialize ETL pipeline
+        # Initialize pipelines
         self.etl_pipeline = HPIETLPipeline(config_path)
+        self.modeling_pipeline = HPIModelingPipeline(config_path)
         
         # Storage for results
         self.raw_data = None
         self.processed_data = None
         self.models = {}
         self.results = {}
+        self.forecasts = {}
     
     def step_1_load_data(self) -> Dict[str, pd.Series]:
         """Step 1: Load all required data using ETL pipeline."""
@@ -143,6 +146,38 @@ class HPIForecastingWorkflow:
             print(f"\n✗ ETL PIPELINE FAILED: {str(e)}")
             raise
     
+    def run_modeling_pipeline(self, 
+                             years_list: Optional[List[int]] = None,
+                             current_ratio: Optional[float] = None) -> Dict[str, Any]:
+        """Run the complete modeling pipeline (steps 1-3) using the new modeling system."""
+        print("="*60)
+        print("HPI FORECASTING MODELING PIPELINE")
+        print("="*60)
+        
+        if self.processed_data is None:
+            raise ValueError("Must run ETL pipeline first to get processed data")
+        
+        try:
+            # Execute modeling pipeline
+            modeling_results = self.modeling_pipeline.run_full_pipeline(
+                processed_data=self.processed_data,
+                preprocessor=self.etl_pipeline.preprocessor,
+                years_list=years_list,
+                current_ratio=current_ratio,
+                ratio_variable=self.etl_pipeline.preprocessor.variables['RATIO']
+            )
+            
+            # Store results in workflow
+            self.models = modeling_results['models']
+            self.results = modeling_results['evaluation_results']
+            self.forecasts = modeling_results['forecasts']
+            
+            return modeling_results
+            
+        except Exception as e:
+            print(f"\n✗ MODELING PIPELINE FAILED: {str(e)}")
+            raise
+    
     def run_complete_workflow(self, years: int = None, 
                             current_ratio: float = None) -> Dict[str, Any]:
         """Run the complete workflow from start to finish."""
@@ -151,23 +186,24 @@ class HPIForecastingWorkflow:
         print("="*60)
         
         try:
-            # Execute all steps
-            raw_data = self.step_1_load_data()
-            processed_data = self.step_2_preprocess_data(years)
-            models = self.step_1_train_models()
-            results = self.step_2_evaluate_models()
-            forecasts = self.step_3_generate_forecasts(current_ratio)
+            # Execute ETL pipeline
+            etl_results = self.run_etl_pipeline(years)
+            
+            # Execute modeling pipeline
+            modeling_results = self.run_modeling_pipeline(current_ratio=current_ratio)
             
             print("\n" + "="*60)
             print("WORKFLOW COMPLETED SUCCESSFULLY")
             print("="*60)
             
             return {
-                'raw_data': raw_data,
-                'processed_data': processed_data,
-                'models': models,
-                'results': results,
-                'forecasts': forecasts
+                'etl_results': etl_results,
+                'modeling_results': modeling_results,
+                'raw_data': self.raw_data,
+                'processed_data': self.processed_data,
+                'models': self.models,
+                'results': self.results,
+                'forecasts': self.forecasts
             }
             
         except Exception as e:
