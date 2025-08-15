@@ -3,16 +3,17 @@ Main entry point for HPI forecasting models.
 This is the only file that interacts with the outside structure.
 """
 
-import sys
-import os
 import json
 import argparse
+import os
 from datetime import datetime
 from typing import Dict, Any, Optional
 
-# Add workflow directory to path
-sys.path.append('workflows')
-from workflow_1 import HPIForecastingWorkflow
+# Import path management
+from forecasting_hpi.models.paths import paths
+
+# Import workflow using the new system
+from forecasting_hpi.models.workflows import HPIForecastingWorkflow
 
 
 def save_results_to_output(results: Dict[str, Any], filename: str = None):
@@ -21,11 +22,8 @@ def save_results_to_output(results: Dict[str, Any], filename: str = None):
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         filename = f"hpi_forecast_results_{timestamp}.json"
     
-    output_dir = "output"
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
-    
-    output_path = os.path.join(output_dir, filename)
+    # Use centralized path management
+    output_path = paths.get_output_path(filename)
     
     # Convert results to JSON-serializable format
     json_results = {}
@@ -53,7 +51,7 @@ def save_results_to_output(results: Dict[str, Any], filename: str = None):
         json.dump(json_results, f, indent=2, default=str)
     
     print(f"Results saved to: {output_path}")
-    return output_path
+    return str(output_path)
 
 
 def run_forecasting_workflow(years: Optional[int] = None, 
@@ -106,7 +104,7 @@ def run_quick_forecast(current_ratio: float, years: int = 5) -> Dict[str, float]
         workflow.step_2_preprocess_data(years=years)
         
         # Train a single model (basic configuration)
-        from modeling.forecast_model import ForecastModel
+        from forecasting_hpi.models.modeling import ForecastModel
         
         model = ForecastModel(
             df=workflow.processed_data,

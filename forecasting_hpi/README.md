@@ -112,6 +112,236 @@ Step 2: Preprocessing data...
 Forecast: 4.2% ± 2.1% annual return
 ```
 
+## Import System Guide
+
+This project implements a comprehensive import system that eliminates the need for manual path management and `sys.path.append()` calls.
+
+### Package Structure
+
+```
+forecasting_hpi/
+├── __init__.py                    # Main package entry point
+├── main.py                        # CLI entry point
+├── models/                        # Core models package
+│   ├── __init__.py               # Models package exports
+│   ├── paths.py                  # Centralized path management
+│   ├── config.json               # Configuration file
+│   ├── data/                     # Data loading modules
+│   │   ├── __init__.py
+│   │   └── data_loader.py
+│   ├── etl/                      # Preprocessing modules
+│   │   ├── __init__.py
+│   │   └── preprocessor.py
+│   ├── modeling/                 # Forecasting models
+│   │   ├── __init__.py
+│   │   └── forecast_model.py
+│   ├── workflows/                # End-to-end workflows
+│   │   ├── __init__.py
+│   │   └── workflow_1.py
+│   └── output/                   # Results output directory
+└── other_directories/             # Additional components
+```
+
+### Import Patterns
+
+#### 1. Top-Level Package Import
+
+```python
+# Import the main workflow class directly
+from forecasting_hpi import HPIForecastingWorkflow
+
+# Use it
+workflow = HPIForecastingWorkflow()
+results = workflow.run_complete_workflow()
+```
+
+#### 2. Models Package Import
+
+```python
+# Import all main classes from models package
+from forecasting_hpi.models import DataLoader, HPIPreprocessor, ForecastModel, HPIForecastingWorkflow
+
+# Use them
+data_loader = DataLoader()
+preprocessor = HPIPreprocessor()
+# etc.
+```
+
+#### 3. Individual Module Import
+
+```python
+# Import from specific modules
+from forecasting_hpi.models.data import DataLoader
+from forecasting_hpi.models.etl import HPIPreprocessor
+from forecasting_hpi.models.modeling import ForecastModel
+from forecasting_hpi.models.workflows import HPIForecastingWorkflow
+```
+
+#### 4. Path Management
+
+```python
+# Access centralized path management
+from forecasting_hpi.models.paths import paths, get_config_path, get_data_file_path
+
+# Get paths
+config_path = get_config_path()
+data_file = get_data_file_path("some_file.csv")
+output_file = paths.get_output_path("results.json")
+```
+
+### Key Features
+
+#### Automatic Path Resolution
+
+All classes now automatically find their configuration files:
+
+```python
+# Before (manual path management)
+workflow = HPIForecastingWorkflow("../config.json")
+
+# After (automatic path resolution)
+workflow = HPIForecastingWorkflow()  # Finds config automatically
+```
+
+#### No More sys.path.append()
+
+```python
+# Before (manual path manipulation)
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../../'))
+from data import load_usa_cpi
+
+# After (clean imports)
+from data import load_usa_cpi  # Path already configured
+```
+
+#### Centralized Configuration
+
+The `PathManager` class handles all path operations:
+
+```python
+from forecasting_hpi.models.paths import paths
+
+# All key paths available
+print(f"Config: {paths.config_file}")
+print(f"Data dir: {paths.project_data_dir}")
+print(f"Output dir: {paths.output_dir}")
+```
+
+### Usage Examples
+
+#### Quick Start with New Import System
+
+```python
+# Simple workflow execution
+from forecasting_hpi import HPIForecastingWorkflow
+
+workflow = HPIForecastingWorkflow()
+results = workflow.run_complete_workflow()
+```
+
+#### Custom Data Loading
+
+```python
+from forecasting_hpi.models.data import DataLoader
+
+loader = DataLoader()
+data = loader.load_all_data()
+cpi = loader.load_cpi()
+hpi = loader.load_hpi()
+```
+
+#### Custom Preprocessing
+
+```python
+from forecasting_hpi.models import DataLoader, HPIPreprocessor
+
+# Load data
+loader = DataLoader()
+raw_data = loader.load_all_data()
+
+# Preprocess
+preprocessor = HPIPreprocessor()
+processed_data = preprocessor.preprocess_full_pipeline(raw_data, years=10)
+```
+
+#### Custom Modeling
+
+```python
+from forecasting_hpi.models import DataLoader, HPIPreprocessor, ForecastModel
+
+# Load and preprocess data
+loader = DataLoader()
+preprocessor = HPIPreprocessor()
+raw_data = loader.load_all_data()
+processed_data = preprocessor.preprocess_full_pipeline(raw_data, years=5)
+
+# Create and use model
+model = ForecastModel(
+    df=processed_data,
+    years=5,
+    use_mortgage_factor=True,
+    use_real_returns=False
+)
+
+# Generate forecast
+mean_return, std_return = model.forecast(current_ratio=2.5)
+```
+
+### Migration from Old System
+
+If you have existing code using the old import system:
+
+#### Old Pattern
+```python
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+from workflow_1 import HPIForecastingWorkflow
+```
+
+#### New Pattern
+```python
+from forecasting_hpi.models.workflows import HPIForecastingWorkflow
+```
+
+#### Old Configuration
+```python
+workflow = HPIForecastingWorkflow("../config.json")
+```
+
+#### New Configuration
+```python
+workflow = HPIForecastingWorkflow()  # Automatic path resolution
+```
+
+### Benefits
+
+1. **No Manual Path Management** - Eliminates `sys.path.append()` and complex relative paths
+2. **Automatic Configuration** - Finds config files automatically
+3. **Clean Code** - Simpler, more readable imports
+4. **Package Standards** - Follows Python packaging best practices
+5. **Error Prevention** - Reduces path-related errors
+6. **Maintainability** - Centralized path management makes changes easier
+
+### Troubleshooting Import Issues
+
+If you encounter import errors:
+
+1. **Ensure you're in the project root** when running scripts
+2. **Check Python path** - The package should be importable from the project root
+3. **Verify file structure** - All `__init__.py` files should be present
+4. **Configuration files** - Ensure `config.json` exists in the models directory
+
+For path-related issues:
+```python
+from forecasting_hpi.models.paths import paths
+print(f"Package root: {paths.package_root}")
+print(f"Project root: {paths.project_root}")
+print(f"Config file: {paths.config_file}")
+```
+
 ## System Architecture
 
 ### Workflow Pipeline
@@ -229,16 +459,24 @@ To use different data sources, modify `config.json`:
 
 ### Integration with External Systems
 
-The `run.py` script can be imported and used programmatically:
+The system can be imported and used programmatically:
 
 ```python
-from models.run import run_quick_forecast, run_forecasting_workflow
+# Using the new import system
+from forecasting_hpi.models.run import run_quick_forecast, run_forecasting_workflow
+
+# Or use the workflow classes directly
+from forecasting_hpi import HPIForecastingWorkflow
 
 # Quick forecast
 result = run_quick_forecast(current_ratio=0.45, years=5)
 
 # Full workflow
 results = run_forecasting_workflow(years=7, save_output=True)
+
+# Direct workflow usage
+workflow = HPIForecastingWorkflow()
+results = workflow.run_complete_workflow(years=7, current_ratio=0.45)
 ```
 
 ## Output and Results
@@ -261,9 +499,13 @@ Results are automatically saved to `models/output/` with timestamps:
 
 ### Common Issues
 
-1. **Import Errors**: Ensure you're running from the `models/` directory
+1. **Import Errors**: 
+   - Ensure you're running from the FinanceOps project root directory
+   - Verify all `__init__.py` files are present
+   - Use the new import patterns: `from forecasting_hpi import HPIForecastingWorkflow`
 2. **Data Not Found**: Verify `../../data/` path contains required CSV files
 3. **Configuration Errors**: Check `config.json` syntax and file paths
+4. **Path Issues**: Use the centralized path management: `from forecasting_hpi.models.paths import paths`
 
 ### Dependencies
 

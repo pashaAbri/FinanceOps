@@ -8,12 +8,17 @@ import numpy as np
 import json
 from typing import Dict, Any
 
+# Import path management
+from forecasting_hpi.models.paths import paths
+
 
 class HPIPreprocessor:
     """Handles preprocessing and feature engineering for HPI forecasting."""
     
-    def __init__(self, config_path: str = "../config.json"):
+    def __init__(self, config_path: str = None):
         """Initialize preprocessor with configuration."""
+        if config_path is None:
+            config_path = paths.get_config_path()
         with open(config_path, 'r') as f:
             self.config = json.load(f)
         

@@ -8,12 +8,17 @@ import os
 import json
 from typing import Dict, Any
 
+# Import path management
+from forecasting_hpi.models.paths import paths
+
 
 class DataLoader:
     """Handles loading of all data files needed for HPI forecasting."""
     
-    def __init__(self, config_path: str = "../config.json"):
+    def __init__(self, config_path: str = None):
         """Initialize DataLoader with configuration."""
+        if config_path is None:
+            config_path = paths.get_config_path()
         with open(config_path, 'r') as f:
             self.config = json.load(f)
         
@@ -54,9 +59,7 @@ class DataLoader:
     
     def load_cpi(self) -> pd.Series:
         """Load Consumer Price Index from external module."""
-        # Import here to avoid circular dependencies
-        import sys
-        sys.path.append('../../')
+        # Import from the main data module (path already configured)
         from data import load_usa_cpi
         return load_usa_cpi()
     
@@ -83,9 +86,7 @@ class DataLoader:
     
     def load_mortgage_rate(self) -> pd.Series:
         """Load 30-year mortgage rate data."""
-        # Import here to avoid circular dependencies
-        import sys
-        sys.path.append('../../')
+        # Import from the main data module (path already configured)
         from data import _resample_daily
         
         data = self._load_data(
@@ -110,3 +111,46 @@ class DataLoader:
         data['mortgage_rate'] = self.load_mortgage_rate()
         
         return data
+    
+    def validate_data(self, data_dict: Dict[str, pd.Series]) -> Dict[str, Any]:
+        """
+        Validate loaded data for completeness and quality.
+        
+        :param data_dict: Dictionary of loaded data series
+        :return: Dictionary with validation results
+        """
+        validation_results = {
+            'is_valid': True,
+            'warnings': [],
+            'info': [],
+            'data_summary': {}
+        }
+        
+        for name, data in data_dict.items():
+            # Basic statistics
+            summary = {
+                'count': len(data),
+                'null_count': data.isnull().sum(),
+                'date_range': (data.index.min(), data.index.max()),
+                'value_range': (data.min(), data.max()) if data.dtype in ['float64', 'int64'] else None
+            }
+            validation_results['data_summary'][name] = summary
+            
+            # Check for missing data
+            null_pct = (data.isnull().sum() / len(data)) * 100
+            if null_pct > 5:
+                validation_results['warnings'].append(
+                    f"{name}: {null_pct:.1f}% missing values"
+                )
+            elif null_pct > 0:
+                validation_results['info'].append(
+                    f"{name}: {null_pct:.1f}% missing values"
+                )
+            
+            # Check for sufficient data
+            if len(data) < 100:
+                validation_results['warnings'].append(
+                    f"{name}: Only {len(data)} observations (may be insufficient)"
+                )
+            
+        return validation_results

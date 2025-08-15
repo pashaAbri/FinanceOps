@@ -3,36 +3,38 @@ Workflow 1: Complete HPI Forecasting Pipeline
 This workflow orchestrates the entire HPI forecasting process from data loading to model evaluation.
 """
 
-import sys
-import os
 import json
 import pandas as pd
 import numpy as np
 from typing import Dict, Any, List, Optional
 
-# Add parent directories to path for imports
-sys.path.append('..')
-sys.path.append('../data')
-sys.path.append('../etl')
-sys.path.append('../modeling')
+# Import path management
+from forecasting_hpi.models.paths import paths
 
-from data.data_loader import DataLoader
-from etl.preprocessor import HPIPreprocessor
-from modeling.forecast_model import ForecastModel, print_statistics
+# Import modules using the new system
+from forecasting_hpi.models.etl import HPIETLPipeline
+from forecasting_hpi.models.modeling import (
+    ForecastModel, print_statistics,
+    ModelPrinter, ModelComparison,
+    train_forecasting_models,
+    evaluate_forecasting_models,
+    generate_forecasts
+)
 
 
 class HPIForecastingWorkflow:
     """Main workflow class for HPI forecasting pipeline."""
     
-    def __init__(self, config_path: str = "../config.json"):
+    def __init__(self, config_path: str = None):
         """Initialize workflow with configuration."""
+        if config_path is None:
+            config_path = paths.get_config_path()
         self.config_path = config_path
         with open(config_path, 'r') as f:
             self.config = json.load(f)
         
-        # Initialize components
-        self.data_loader = DataLoader(config_path)
-        self.preprocessor = HPIPreprocessor(config_path)
+        # Initialize ETL pipeline
+        self.etl_pipeline = HPIETLPipeline(config_path)
         
         # Storage for results
         self.raw_data = None
@@ -41,16 +43,11 @@ class HPIForecastingWorkflow:
         self.results = {}
     
     def step_1_load_data(self) -> Dict[str, pd.Series]:
-        """Step 1: Load all required data."""
+        """Step 1: Load all required data using ETL pipeline."""
         print("Step 1: Loading data...")
         
         try:
-            self.raw_data = self.data_loader.load_all_data()
-            print(f"✓ Successfully loaded {len(self.raw_data)} data sources")
-            
-            # Print basic info about loaded data
-            for name, data in self.raw_data.items():
-                print(f"  - {name}: {len(data)} records, from {data.index.min()} to {data.index.max()}")
+            self.raw_data = self.etl_pipeline.extract()
             
         except Exception as e:
             print(f"✗ Error loading data: {str(e)}")
@@ -59,23 +56,14 @@ class HPIForecastingWorkflow:
         return self.raw_data
     
     def step_2_preprocess_data(self, years: int = None) -> pd.DataFrame:
-        """Step 2: Preprocess and engineer features."""
+        """Step 2: Preprocess and engineer features using ETL pipeline."""
         print("\nStep 2: Preprocessing data...")
         
         if self.raw_data is None:
             raise ValueError("Must run step_1_load_data first")
         
-        if years is None:
-            years = self.config['model']['default_forecast_years']
-        
         try:
-            self.processed_data = self.preprocessor.preprocess_full_pipeline(
-                self.raw_data, years=years
-            )
-            print(f"✓ Successfully preprocessed data")
-            print(f"  - Final dataset shape: {self.processed_data.shape}")
-            print(f"  - Date range: {self.processed_data.index.min()} to {self.processed_data.index.max()}")
-            print(f"  - Columns: {list(self.processed_data.columns)}")
+            self.processed_data = self.etl_pipeline.transform(years)
             
         except Exception as e:
             print(f"✗ Error preprocessing data: {str(e)}")
@@ -83,44 +71,18 @@ class HPIForecastingWorkflow:
         
         return self.processed_data
     
-    def step_3_train_models(self, years_list: Optional[List[int]] = None) -> Dict[str, ForecastModel]:
-        """Step 3: Train forecasting models for different time horizons."""
-        print("\nStep 3: Training models...")
-        
+    def step_1_train_models(self, years_list: Optional[List[int]] = None) -> Dict[str, ForecastModel]:
+        """Step 1: Train forecasting models for different time horizons."""
         if self.processed_data is None:
             raise ValueError("Must run step_2_preprocess_data first")
         
-        if years_list is None:
-            years_list = self.config['model']['forecasting_years']
-        
-        model_configs = [
-            {'use_mortgage_factor': False, 'use_real_returns': False},
-            {'use_mortgage_factor': True, 'use_real_returns': False},
-            {'use_mortgage_factor': False, 'use_real_returns': True},
-            {'use_mortgage_factor': True, 'use_real_returns': True},
-        ]
-        
         try:
-            for years in years_list:
-                print(f"\n  Training models for {years}-year forecasts...")
-                
-                # Prepare data with annualized returns for this time horizon
-                df_years = self.preprocessor.prepare_ann_returns(self.processed_data, years)
-                
-                for i, config in enumerate(model_configs):
-                    model_key = f"{years}y_mf{config['use_mortgage_factor']}_real{config['use_real_returns']}"
-                    
-                    model = ForecastModel(
-                        df=df_years,
-                        years=years,
-                        config_path=self.config_path,
-                        **config
-                    )
-                    
-                    self.models[model_key] = model
-                    print(f"    ✓ Model {i+1}/4 trained: {model_key}")
-            
-            print(f"✓ Successfully trained {len(self.models)} models")
+            self.models = train_forecasting_models(
+                processed_data=self.processed_data,
+                preprocessor=self.etl_pipeline.preprocessor,
+                config_path=self.config_path,
+                years_list=years_list
+            )
             
         except Exception as e:
             print(f"✗ Error training models: {str(e)}")
@@ -128,37 +90,13 @@ class HPIForecastingWorkflow:
         
         return self.models
     
-    def step_4_evaluate_models(self) -> Dict[str, Dict[str, float]]:
-        """Step 4: Evaluate model performance."""
-        print("\nStep 4: Evaluating models...")
-        
+    def step_2_evaluate_models(self) -> Dict[str, Dict[str, float]]:
+        """Step 2: Evaluate model performance."""
         if not self.models:
-            raise ValueError("Must run step_3_train_models first")
+            raise ValueError("Must run step_1_train_models first")
         
         try:
-            for model_key, model in self.models.items():
-                print(f"\n  Evaluating {model_key}...")
-                
-                # Get appropriate data for this model
-                valid_data = model.df.dropna()
-                ratio_col = model.ratio_col
-                return_col = model.return_col
-                
-                # Calculate performance metrics
-                mae = model.MAE(valid_data[ratio_col], valid_data[return_col])
-                r_squared = model.R_squared(valid_data[ratio_col], valid_data[return_col])
-                
-                self.results[model_key] = {
-                    'mae': mae,
-                    'r_squared': r_squared,
-                    'correlation': model.correlation,
-                    'mean_valuation_ratio': model.mean_valuation_ratio,
-                    'mean_earnings_growth': model.mean_earnings_growth
-                }
-                
-                print(f"    MAE: {mae:.4f}, R²: {r_squared:.4f}")
-            
-            print(f"✓ Successfully evaluated all models")
+            self.results = evaluate_forecasting_models(self.models)
             
         except Exception as e:
             print(f"✗ Error evaluating models: {str(e)}")
@@ -166,40 +104,44 @@ class HPIForecastingWorkflow:
         
         return self.results
     
-    def step_5_generate_forecasts(self, current_ratio: float = None) -> Dict[str, Dict[str, float]]:
-        """Step 5: Generate forecasts using trained models."""
-        print("\nStep 5: Generating forecasts...")
-        
+    def step_3_generate_forecasts(self, current_ratio: float = None) -> Dict[str, Dict[str, float]]:
+        """Step 3: Generate forecasts using trained models."""
         if not self.models:
-            raise ValueError("Must run step_3_train_models first")
-        
-        # Use latest available ratio if not provided
-        if current_ratio is None:
-            latest_data = self.processed_data.dropna().iloc[-1]
-            current_ratio = latest_data[self.preprocessor.variables['RATIO']]
-            print(f"  Using latest available ratio: {current_ratio:.4f}")
-        
-        forecasts = {}
+            raise ValueError("Must run step_1_train_models first")
         
         try:
-            for model_key, model in self.models.items():
-                mean_return, std_return = model.forecast(current_ratio)
-                
-                forecasts[model_key] = {
-                    'mean_return': mean_return,
-                    'std_return': std_return,
-                    'current_ratio': current_ratio
-                }
-                
-                print(f"  {model_key}: {mean_return:.1%} ± {std_return:.1%}")
-            
-            print(f"✓ Successfully generated forecasts for all models")
+            forecasts = generate_forecasts(
+                models=self.models,
+                current_ratio=current_ratio,
+                processed_data=self.processed_data,
+                ratio_variable=self.etl_pipeline.preprocessor.variables['RATIO']
+            )
             
         except Exception as e:
             print(f"✗ Error generating forecasts: {str(e)}")
             raise
         
         return forecasts
+    
+    def run_etl_pipeline(self, years: int = None) -> Dict[str, Any]:
+        """Run the complete ETL pipeline (steps 1-2) using the new ETL system."""
+        print("="*60)
+        print("HPI FORECASTING ETL PIPELINE")
+        print("="*60)
+        
+        try:
+            # Execute ETL pipeline
+            etl_results = self.etl_pipeline.run_full_pipeline(years)
+            
+            # Store results in workflow
+            self.raw_data = etl_results['raw_data']
+            self.processed_data = etl_results['processed_data']
+            
+            return etl_results
+            
+        except Exception as e:
+            print(f"\n✗ ETL PIPELINE FAILED: {str(e)}")
+            raise
     
     def run_complete_workflow(self, years: int = None, 
                             current_ratio: float = None) -> Dict[str, Any]:
@@ -212,9 +154,9 @@ class HPIForecastingWorkflow:
             # Execute all steps
             raw_data = self.step_1_load_data()
             processed_data = self.step_2_preprocess_data(years)
-            models = self.step_3_train_models()
-            results = self.step_4_evaluate_models()
-            forecasts = self.step_5_generate_forecasts(current_ratio)
+            models = self.step_1_train_models()
+            results = self.step_2_evaluate_models()
+            forecasts = self.step_3_generate_forecasts(current_ratio)
             
             print("\n" + "="*60)
             print("WORKFLOW COMPLETED SUCCESSFULLY")
@@ -242,7 +184,31 @@ class HPIForecastingWorkflow:
         print("MODEL PERFORMANCE SUMMARY")
         print("="*60)
         
-        # Sort results by R-squared descending
+        # Prepare results for comparison using new utilities
+        comparison_results = []
+        for model_key, metrics in self.results.items():
+            comparison_results.append({
+                'model_key': model_key,
+                'accuracy_metrics': {
+                    'r_squared': metrics['r_squared'],
+                    'mae': metrics['mae'],
+                    'correlation': metrics['correlation'],
+                    'directional_accuracy': 50.0  # Default placeholder
+                }
+            })
+        
+        # Use the new model comparison utilities
+        ModelPrinter.print_comparison_table(comparison_results)
+        
+        # Find and highlight the best model
+        if comparison_results:
+            best_model = ModelComparison.find_best_model(comparison_results)
+            if best_model:
+                print(f"\nBest Model: {best_model['model_key']}")
+                print(f"Composite Score: {best_model.get('composite_score', 0):.4f}")
+        
+        # Legacy format for backward compatibility
+        print("\nDetailed Results:")
         sorted_results = sorted(
             self.results.items(), 
             key=lambda x: x[1]['r_squared'], 
@@ -262,7 +228,7 @@ def main():
     workflow = HPIForecastingWorkflow()
     
     # Run complete workflow
-    results = workflow.run_complete_workflow()
+    workflow.run_complete_workflow()
     
     # Print summary
     workflow.print_summary_report()
