@@ -1,0 +1,41 @@
+{
+  "data": {
+    "data_dir": "../data/",
+    "files": {
+      "hpi": "USA House Price Index.csv",
+      "earnings_nominal": "USA Median Weekly Nominal Earnings.csv",
+      "earnings_real": "USA Median Weekly Real Earnings.csv",
+      "mortgage_rate": "USA Mortgage Rate 30-Year.csv",
+      "cpi": "USA CPI.csv"
+    }
+  },
+  "variables": {
+    "HPI": "HPI",
+    "HPI_REAL": "HPI (Real)",
+    "EARNINGS": "Earnings",
+    "EARNINGS_REAL": "Earnings (Real)",
+    "EARNINGS_GROWTH": "Earnings Growth",
+    "EARNINGS_GROWTH_REAL": "Earnings Growth (Real)",
+    "RATIO": "HPI/Earnings",
+    "RATIO_MF": "MF x HPI/Earnings",
+    "ANN_RETURN": "Ann. Return",
+    "ANN_RETURN_REAL": "Ann. Return (Real)",
+    "MORTGAGE_RATE": "Mortgage Rate 30-Year",
+    "MORTGAGE_FACTOR": "Mortgage Factor",
+    "CPI": "CPI"
+  },
+  "model": {
+    "mortgage_years": 30,
+    "earnings_growth_periods": 4,
+    "forecasting_years": [3, 4, 5, 6, 7, 8, 9, 10],
+    "default_forecast_years": 5,
+    "use_mortgage_factor": false,
+    "use_real_returns": false,
+    "mean_valuation_ratio": null
+  },
+  "plotting": {
+    "figure_size": [14, 8],
+    "grid": true,
+    "color_map": "rainbow"
+  }
+}
