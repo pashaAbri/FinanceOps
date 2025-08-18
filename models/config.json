@@ -1,37 +1,58 @@
 {
   "data": {
     "data_dir": "data/",
-    "files": {
-      "hpi": "USA House Price Index.csv",
-      "earnings_nominal": "USA Median Weekly Nominal Earnings.csv",
-      "earnings_real": "USA Median Weekly Real Earnings.csv",
-      "mortgage_rate": "USA Mortgage Rate 30-Year.csv",
-      "cpi": "USA CPI.csv"
+    "files": [
+      {
+        "key": "hpi",
+        "default": "USA House Price Index.csv",
+        "required": true
+      },
+      {
+        "key": "earnings_nominal",
+        "default": "USA Median Weekly Nominal Earnings.csv",
+        "required": true
+      },
+      {
+        "key": "earnings_real",
+        "default": "USA Median Weekly Real Earnings.csv",
+        "required": true
+      },
+      {
+        "key": "mortgage_rate",
+        "default": "USA Mortgage Rate 30-Year.csv",
+        "required": true
+      },
+      {
+        "key": "cpi",
+        "default": "USA CPI.csv",
+        "required": true
+      }
+    ]
+  },
+  "parameters": {
+    "variables": ["HPI", "HPI_REAL", "EARNINGS", "EARNINGS_REAL", "EARNINGS_GROWTH", "EARNINGS_GROWTH_REAL", "RATIO", "RATIO_MF", "ANN_RETURN", "ANN_RETURN_REAL", "MORTGAGE_RATE", "MORTGAGE_FACTOR", "CPI", "MORTGAGE_YEARS", "EARNINGS_GROWTH_PERIODS", "FORECASTING_YEARS", "DEFAULT_FORECAST_YEARS", "USE_MORTGAGE_FACTOR", "USE_REAL_RETURNS", "MEAN_VALUATION_RATIO"],
+    "properties": {
+      "HPI": {"display_name": "HPI", "type": "double", "default": 0.0},
+      "HPI_REAL": {"display_name": "HPI (Real)", "type": "double", "default": 0.0},
+      "EARNINGS": {"display_name": "Earnings", "type": "double", "default": 0.0},
+      "EARNINGS_REAL": {"display_name": "Earnings (Real)", "type": "double", "default": 0.0},
+      "EARNINGS_GROWTH": {"display_name": "Earnings Growth", "type": "double", "default": 0.0},
+      "EARNINGS_GROWTH_REAL": {"display_name": "Earnings Growth (Real)", "type": "double", "default": 0.0},
+      "RATIO": {"display_name": "HPI/Earnings", "type": "double", "default": 0.0},
+      "RATIO_MF": {"display_name": "MF x HPI/Earnings", "type": "double", "default": 0.0},
+      "ANN_RETURN": {"display_name": "Ann. Return", "type": "double", "default": 0.0},
+      "ANN_RETURN_REAL": {"display_name": "Ann. Return (Real)", "type": "double", "default": 0.0},
+      "MORTGAGE_RATE": {"display_name": "Mortgage Rate 30-Year", "type": "double", "default": 0.0},
+      "MORTGAGE_FACTOR": {"display_name": "Mortgage Factor", "type": "double", "default": 1.0},
+      "CPI": {"display_name": "CPI", "type": "double", "default": 100.0},
+      "MORTGAGE_YEARS": {"display_name": "Mortgage Years", "type": "int", "default": 30},
+      "EARNINGS_GROWTH_PERIODS": {"display_name": "Earnings Growth Periods", "type": "int", "default": 4},
+      "FORECASTING_YEARS": {"display_name": "Forecasting Years", "type": "array", "default": [3, 4, 5, 6, 7, 8, 9, 10]},
+      "DEFAULT_FORECAST_YEARS": {"display_name": "Default Forecast Years", "type": "int", "default": 5},
+      "USE_MORTGAGE_FACTOR": {"display_name": "Use Mortgage Factor", "type": "bool", "default": false},
+      "USE_REAL_RETURNS": {"display_name": "Use Real Returns", "type": "bool", "default": false},
+      "MEAN_VALUATION_RATIO": {"display_name": "Mean Valuation Ratio", "type": "double", "default": null}
     }
-  },
-  "variables": {
-    "HPI": "HPI",
-    "HPI_REAL": "HPI (Real)",
-    "EARNINGS": "Earnings",
-    "EARNINGS_REAL": "Earnings (Real)",
-    "EARNINGS_GROWTH": "Earnings Growth",
-    "EARNINGS_GROWTH_REAL": "Earnings Growth (Real)",
-    "RATIO": "HPI/Earnings",
-    "RATIO_MF": "MF x HPI/Earnings",
-    "ANN_RETURN": "Ann. Return",
-    "ANN_RETURN_REAL": "Ann. Return (Real)",
-    "MORTGAGE_RATE": "Mortgage Rate 30-Year",
-    "MORTGAGE_FACTOR": "Mortgage Factor",
-    "CPI": "CPI"
-  },
-  "model": {
-    "mortgage_years": 30,
-    "earnings_growth_periods": 4,
-    "forecasting_years": [3, 4, 5, 6, 7, 8, 9, 10],
-    "default_forecast_years": 5,
-    "use_mortgage_factor": false,
-    "use_real_returns": false,
-    "mean_valuation_ratio": null
   },
   "plotting": {
     "figure_size": [14, 8],

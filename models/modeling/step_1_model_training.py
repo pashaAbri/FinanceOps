@@ -26,6 +26,10 @@ class ModelTrainer:
         with open(config_path, 'r') as f:
             self.config = json.load(f)
         
+        # Create variables dictionary from parameters structure
+        self.variables = {var: self.config['parameters']['properties'][var]['display_name'] 
+                         for var in self.config['parameters']['variables']}
+        
         # Storage for trained models
         self.models = {}
     
@@ -91,7 +95,7 @@ class ModelTrainer:
         :return: Dictionary of all trained models
         """
         if years_list is None:
-            years_list = self.config['model']['forecasting_years']
+            years_list = self.config['parameters']['properties']['FORECASTING_YEARS']['default']
         
         print("\nStep 1: Training models...")
         

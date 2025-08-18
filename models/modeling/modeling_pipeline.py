@@ -41,6 +41,10 @@ class HPIModelingPipeline:
         with open(config_path, 'r') as f:
             self.config = json.load(f)
         
+        # Create variables dictionary from parameters structure  
+        self.variables = {var: self.config['parameters']['properties'][var]['display_name'] 
+                         for var in self.config['parameters']['variables']}
+        
         # Initialize step components
         self.trainer = ModelTrainer(config_path)
         self.evaluator = ModelEvaluationEngine()

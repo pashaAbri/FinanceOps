@@ -1,0 +1,1267 @@
+{
+  "etl_results": {
+    "raw_data": {
+      "cpi": "Date\n1913-01-01      9.8000\n1913-01-02      9.8000\n1913-01-03      9.8000\n1913-01-04      9.8000\n1913-01-05      9.8000\n                ...   \n2020-09-27    260.3736\n2020-09-28    260.3772\n2020-09-29    260.3808\n2020-09-30    260.3844\n2020-10-01    260.3880\nFreq: D, Name: CPI, Length: 39356, dtype: float64",
+      "hpi": "Date\n1975-01-01     59.83\n1975-04-01     61.13\n1975-07-01     61.25\n1975-10-01     62.35\n1976-01-01     62.85\n               ...  \n2017-10-01    407.67\n2018-01-01    413.53\n2018-04-01    423.91\n2018-07-01    430.76\n2018-10-01    432.14\nName: HPI, Length: 176, dtype: float64",
+      "earnings_nominal": "Date\n1979-01-01    234\n1979-04-01    239\n1979-07-01    240\n1979-10-01    249\n1980-01-01    256\n             ... \n2018-01-01    881\n2018-04-01    876\n2018-07-01    887\n2018-10-01    900\n2019-01-01    905\nName: Earnings, Length: 161, dtype: int64",
+      "earnings_real": "Date\n1979-01-01    335\n1979-04-01    335\n1979-07-01    330\n1979-10-01    326\n1980-01-01    321\n             ... \n2018-01-01    350\n2018-04-01    351\n2018-07-01    355\n2018-10-01    355\n2019-01-01    355\nName: Earnings (Real), Length: 161, dtype: int64",
+      "mortgage_rate": "Date\n1971-04-02    0.073300\n1971-04-03    0.073271\n1971-04-04    0.073243\n1971-04-05    0.073214\n1971-04-06    0.073186\n                ...   \n2019-04-14    0.041414\n2019-04-15    0.041486\n2019-04-16    0.041557\n2019-04-17    0.041629\n2019-04-18    0.041700\nFreq: D, Name: Mortgage Rate 30-Year, Length: 17549, dtype: float64"
+    },
+    "processed_data": "                CPI     HPI  Earnings  ...  MF x HPI/Earnings  Ann. Return  Ann. Return (Real)\nDate                                   ...                                                    \n1979-01-01   68.300   91.38     234.0  ...           0.895712     0.053938           -0.027109\n1979-04-01   70.600   94.37     239.0  ...           0.930950     0.049891           -0.026685\n1979-07-01   73.100   96.38     240.0  ...           1.016430     0.047396           -0.024103\n1979-10-01   75.200   98.29     249.0  ...           1.069111     0.044988           -0.023057\n1980-01-01   77.800  100.00     256.0  ...           1.235624     0.044331           -0.017384\n...             ...     ...       ...  ...                ...          ...                 ...\n2017-10-01  246.663  407.67     857.0  ...           2.010061          NaN                 NaN\n2018-01-01  247.867  413.53     881.0  ...           2.041643          NaN                 NaN\n2018-04-01  250.546  423.91     876.0  ...           2.204170          NaN                 NaN\n2018-07-01  252.006  430.76     887.0  ...           2.244566          NaN                 NaN\n2018-10-01  252.885  432.14     900.0  ...           2.298800          NaN                 NaN\n\n[160 rows x 13 columns]",
+    "final_data": "                CPI     HPI  Earnings  ...  MF x HPI/Earnings  Ann. Return  Ann. Return (Real)\nDate                                   ...                                                    \n1979-01-01   68.300   91.38     234.0  ...           0.895712     0.053938           -0.027109\n1979-04-01   70.600   94.37     239.0  ...           0.930950     0.049891           -0.026685\n1979-07-01   73.100   96.38     240.0  ...           1.016430     0.047396           -0.024103\n1979-10-01   75.200   98.29     249.0  ...           1.069111     0.044988           -0.023057\n1980-01-01   77.800  100.00     256.0  ...           1.235624     0.044331           -0.017384\n...             ...     ...       ...  ...                ...          ...                 ...\n2017-10-01  246.663  407.67     857.0  ...           2.010061          NaN                 NaN\n2018-01-01  247.867  413.53     881.0  ...           2.041643          NaN                 NaN\n2018-04-01  250.546  423.91     876.0  ...           2.204170          NaN                 NaN\n2018-07-01  252.006  430.76     887.0  ...           2.244566          NaN                 NaN\n2018-10-01  252.885  432.14     900.0  ...           2.298800          NaN                 NaN\n\n[160 rows x 13 columns]",
+    "validation_results": {
+      "is_valid": true,
+      "warnings": [],
+      "info": [],
+      "data_summary": {
+        "cpi": {
+          "count": 39356,
+          "null_count": "0",
+          "date_range": [
+            "1913-01-01 00:00:00",
+            "2020-10-01 00:00:00"
+          ],
+          "value_range": [
+            9.7,
+            260.388
+          ]
+        },
+        "hpi": {
+          "count": 176,
+          "null_count": "0",
+          "date_range": [
+            "1975-01-01 00:00:00",
+            "2018-10-01 00:00:00"
+          ],
+          "value_range": [
+            59.83,
+            432.14
+          ]
+        },
+        "earnings_nominal": {
+          "count": 161,
+          "null_count": "0",
+          "date_range": [
+            "1979-01-01 00:00:00",
+            "2019-01-01 00:00:00"
+          ],
+          "value_range": [
+            "234",
+            "905"
+          ]
+        },
+        "earnings_real": {
+          "count": 161,
+          "null_count": "0",
+          "date_range": [
+            "1979-01-01 00:00:00",
+            "2019-01-01 00:00:00"
+          ],
+          "value_range": [
+            "309",
+            "355"
+          ]
+        },
+        "mortgage_rate": {
+          "count": 17549,
+          "null_count": "0",
+          "date_range": [
+            "1971-04-02 00:00:00",
+            "2019-04-18 00:00:00"
+          ],
+          "value_range": [
+            0.0331,
+            0.1863
+          ]
+        }
+      }
+    },
+    "config": {
+      "data": {
+        "data_dir": "data/",
+        "files": [
+          {
+            "key": "hpi",
+            "default": "USA House Price Index.csv",
+            "required": true
+          },
+          {
+            "key": "earnings_nominal",
+            "default": "USA Median Weekly Nominal Earnings.csv",
+            "required": true
+          },
+          {
+            "key": "earnings_real",
+            "default": "USA Median Weekly Real Earnings.csv",
+            "required": true
+          },
+          {
+            "key": "mortgage_rate",
+            "default": "USA Mortgage Rate 30-Year.csv",
+            "required": true
+          },
+          {
+            "key": "cpi",
+            "default": "USA CPI.csv",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "variables": [
+          "HPI",
+          "HPI_REAL",
+          "EARNINGS",
+          "EARNINGS_REAL",
+          "EARNINGS_GROWTH",
+          "EARNINGS_GROWTH_REAL",
+          "RATIO",
+          "RATIO_MF",
+          "ANN_RETURN",
+          "ANN_RETURN_REAL",
+          "MORTGAGE_RATE",
+          "MORTGAGE_FACTOR",
+          "CPI",
+          "MORTGAGE_YEARS",
+          "EARNINGS_GROWTH_PERIODS",
+          "FORECASTING_YEARS",
+          "DEFAULT_FORECAST_YEARS",
+          "USE_MORTGAGE_FACTOR",
+          "USE_REAL_RETURNS",
+          "MEAN_VALUATION_RATIO"
+        ],
+        "properties": {
+          "HPI": {
+            "display_name": "HPI",
+            "type": "double",
+            "default": 0.0
+          },
+          "HPI_REAL": {
+            "display_name": "HPI (Real)",
+            "type": "double",
+            "default": 0.0
+          },
+          "EARNINGS": {
+            "display_name": "Earnings",
+            "type": "double",
+            "default": 0.0
+          },
+          "EARNINGS_REAL": {
+            "display_name": "Earnings (Real)",
+            "type": "double",
+            "default": 0.0
+          },
+          "EARNINGS_GROWTH": {
+            "display_name": "Earnings Growth",
+            "type": "double",
+            "default": 0.0
+          },
+          "EARNINGS_GROWTH_REAL": {
+            "display_name": "Earnings Growth (Real)",
+            "type": "double",
+            "default": 0.0
+          },
+          "RATIO": {
+            "display_name": "HPI/Earnings",
+            "type": "double",
+            "default": 0.0
+          },
+          "RATIO_MF": {
+            "display_name": "MF x HPI/Earnings",
+            "type": "double",
+            "default": 0.0
+          },
+          "ANN_RETURN": {
+            "display_name": "Ann. Return",
+            "type": "double",
+            "default": 0.0
+          },
+          "ANN_RETURN_REAL": {
+            "display_name": "Ann. Return (Real)",
+            "type": "double",
+            "default": 0.0
+          },
+          "MORTGAGE_RATE": {
+            "display_name": "Mortgage Rate 30-Year",
+            "type": "double",
+            "default": 0.0
+          },
+          "MORTGAGE_FACTOR": {
+            "display_name": "Mortgage Factor",
+            "type": "double",
+            "default": 1.0
+          },
+          "CPI": {
+            "display_name": "CPI",
+            "type": "double",
+            "default": 100.0
+          },
+          "MORTGAGE_YEARS": {
+            "display_name": "Mortgage Years",
+            "type": "int",
+            "default": 30
+          },
+          "EARNINGS_GROWTH_PERIODS": {
+            "display_name": "Earnings Growth Periods",
+            "type": "int",
+            "default": 4
+          },
+          "FORECASTING_YEARS": {
+            "display_name": "Forecasting Years",
+            "type": "array",
+            "default": [
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ]
+          },
+          "DEFAULT_FORECAST_YEARS": {
+            "display_name": "Default Forecast Years",
+            "type": "int",
+            "default": 5
+          },
+          "USE_MORTGAGE_FACTOR": {
+            "display_name": "Use Mortgage Factor",
+            "type": "bool",
+            "default": false
+          },
+          "USE_REAL_RETURNS": {
+            "display_name": "Use Real Returns",
+            "type": "bool",
+            "default": false
+          },
+          "MEAN_VALUATION_RATIO": {
+            "display_name": "Mean Valuation Ratio",
+            "type": "double",
+            "default": null
+          }
+        }
+      },
+      "plotting": {
+        "figure_size": [
+          14,
+          8
+        ],
+        "grid": true,
+        "color_map": "rainbow"
+      }
+    }
+  },
+  "modeling_results": {
+    "models": {
+      "3y_mfFalse_realFalse": "<models.modeling.forecast_model.ForecastModel object at 0x109fe5490>",
+      "3y_mfTrue_realFalse": "<models.modeling.forecast_model.ForecastModel object at 0x128dca590>",
+      "3y_mfFalse_realTrue": "<models.modeling.forecast_model.ForecastModel object at 0x128daf250>",
+      "3y_mfTrue_realTrue": "<models.modeling.forecast_model.ForecastModel object at 0x128e21090>",
+      "4y_mfFalse_realFalse": "<models.modeling.forecast_model.ForecastModel object at 0x128dcab50>",
+      "4y_mfTrue_realFalse": "<models.modeling.forecast_model.ForecastModel object at 0x128ddea50>",
+      "4y_mfFalse_realTrue": "<models.modeling.forecast_model.ForecastModel object at 0x128de9a90>",
+      "4y_mfTrue_realTrue": "<models.modeling.forecast_model.ForecastModel object at 0x128df0b10>",
+      "5y_mfFalse_realFalse": "<models.modeling.forecast_model.ForecastModel object at 0x128ddead0>",
+      "5y_mfTrue_realFalse": "<models.modeling.forecast_model.ForecastModel object at 0x128de9990>",
+      "5y_mfFalse_realTrue": "<models.modeling.forecast_model.ForecastModel object at 0x128e09cd0>",
+      "5y_mfTrue_realTrue": "<models.modeling.forecast_model.ForecastModel object at 0x128e0d550>",
+      "6y_mfFalse_realFalse": "<models.modeling.forecast_model.ForecastModel object at 0x128dff1d0>",
+      "6y_mfTrue_realFalse": "<models.modeling.forecast_model.ForecastModel object at 0x128e17990>",
+      "6y_mfFalse_realTrue": "<models.modeling.forecast_model.ForecastModel object at 0x128e3eb50>",
+      "6y_mfTrue_realTrue": "<models.modeling.forecast_model.ForecastModel object at 0x128e35c50>",
+      "7y_mfFalse_realFalse": "<models.modeling.forecast_model.ForecastModel object at 0x128e17a10>",
+      "7y_mfTrue_realFalse": "<models.modeling.forecast_model.ForecastModel object at 0x1298a44d0>",
+      "7y_mfFalse_realTrue": "<models.modeling.forecast_model.ForecastModel object at 0x1298a7390>",
+      "7y_mfTrue_realTrue": "<models.modeling.forecast_model.ForecastModel object at 0x12989e610>",
+      "8y_mfFalse_realFalse": "<models.modeling.forecast_model.ForecastModel object at 0x1298a4550>",
+      "8y_mfTrue_realFalse": "<models.modeling.forecast_model.ForecastModel object at 0x129889050>",
+      "8y_mfFalse_realTrue": "<models.modeling.forecast_model.ForecastModel object at 0x12987c250>",
+      "8y_mfTrue_realTrue": "<models.modeling.forecast_model.ForecastModel object at 0x12987f110>",
+      "9y_mfFalse_realFalse": "<models.modeling.forecast_model.ForecastModel object at 0x1298890d0>",
+      "9y_mfTrue_realFalse": "<models.modeling.forecast_model.ForecastModel object at 0x12986d950>",
+      "9y_mfFalse_realTrue": "<models.modeling.forecast_model.ForecastModel object at 0x12985c910>",
+      "9y_mfTrue_realTrue": "<models.modeling.forecast_model.ForecastModel object at 0x12985f8d0>",
+      "10y_mfFalse_realFalse": "<models.modeling.forecast_model.ForecastModel object at 0x12986d9d0>",
+      "10y_mfTrue_realFalse": "<models.modeling.forecast_model.ForecastModel object at 0x12984e210>",
+      "10y_mfFalse_realTrue": "<models.modeling.forecast_model.ForecastModel object at 0x12983d190>",
+      "10y_mfTrue_realTrue": "<models.modeling.forecast_model.ForecastModel object at 0x1298341d0>"
+    },
+    "evaluation_results": {
+      "3y_mfFalse_realFalse": {
+        "mae": 0.02732941571465685,
+        "r_squared": -0.0033690996768538373,
+        "correlation": -0.5458123183915623,
+        "mean_valuation_ratio": 0.41897284244678873,
+        "mean_earnings_growth": 0.03445311622081912
+      },
+      "3y_mfTrue_realFalse": {
+        "mae": 0.03740302910838998,
+        "r_squared": -0.7464421035595705,
+        "correlation": -0.5784007797407501,
+        "mean_valuation_ratio": 1.738658517232625,
+        "mean_earnings_growth": 0.03445311622081912
+      },
+      "3y_mfFalse_realTrue": {
+        "mae": 0.03157411633339656,
+        "r_squared": -0.3058901563142198,
+        "correlation": -0.4321098030835811,
+        "mean_valuation_ratio": 0.41897284244678873,
+        "mean_earnings_growth": 0.0009669775288007748
+      },
+      "3y_mfTrue_realTrue": {
+        "mae": 0.041164148364522125,
+        "r_squared": -1.2933921239730406,
+        "correlation": -0.43152350784699284,
+        "mean_valuation_ratio": 1.738658517232625,
+        "mean_earnings_growth": 0.0009669775288007748
+      },
+      "4y_mfFalse_realFalse": {
+        "mae": 0.02009032709724475,
+        "r_squared": 0.3836881167981905,
+        "correlation": -0.6701058061591305,
+        "mean_valuation_ratio": 0.4183844502542681,
+        "mean_earnings_growth": 0.03478752792816512
+      },
+      "4y_mfTrue_realFalse": {
+        "mae": 0.027074052775200304,
+        "r_squared": -0.10136518396580163,
+        "correlation": -0.635253303661209,
+        "mean_valuation_ratio": 1.7375219409895302,
+        "mean_earnings_growth": 0.03478752792816512
+      },
+      "4y_mfFalse_realTrue": {
+        "mae": 0.02376543689525719,
+        "r_squared": 0.10646255840904928,
+        "correlation": -0.5494609302112864,
+        "mean_valuation_ratio": 0.4183844502542681,
+        "mean_earnings_growth": 0.0003742494460480266
+      },
+      "4y_mfTrue_realTrue": {
+        "mae": 0.03164012612592399,
+        "r_squared": -0.5735026291415644,
+        "correlation": -0.48808344565745515,
+        "mean_valuation_ratio": 1.7375219409895302,
+        "mean_earnings_growth": 0.0003742494460480266
+      },
+      "5y_mfFalse_realFalse": {
+        "mae": 0.015839299675235098,
+        "r_squared": 0.5531759543933652,
+        "correlation": -0.760054316643252,
+        "mean_valuation_ratio": 0.41812454913886266,
+        "mean_earnings_growth": 0.03525119342501974
+      },
+      "5y_mfTrue_realFalse": {
+        "mae": 0.02043564801610269,
+        "r_squared": 0.1696857098958432,
+        "correlation": -0.6714891578058717,
+        "mean_valuation_ratio": 1.735058309555723,
+        "mean_earnings_growth": 0.03525119342501974
+      },
+      "5y_mfFalse_realTrue": {
+        "mae": 0.018912903592221635,
+        "r_squared": 0.2902749820280305,
+        "correlation": -0.634806882141677,
+        "mean_valuation_ratio": 0.41812454913886266,
+        "mean_earnings_growth": 0.0003180857024400414
+      },
+      "5y_mfTrue_realTrue": {
+        "mae": 0.025647778730663106,
+        "r_squared": -0.25575907482603144,
+        "correlation": -0.5297961401277606,
+        "mean_valuation_ratio": 1.735058309555723,
+        "mean_earnings_growth": 0.0003180857024400414
+      },
+      "6y_mfFalse_realFalse": {
+        "mae": 0.01341855296519052,
+        "r_squared": 0.6263407053748331,
+        "correlation": -0.8137937092164289,
+        "mean_valuation_ratio": 0.41824859725664043,
+        "mean_earnings_growth": 0.035993422097446874
+      },
+      "6y_mfTrue_realFalse": {
+        "mae": 0.017661257500927906,
+        "r_squared": 0.2991220878271579,
+        "correlation": -0.6929237482343198,
+        "mean_valuation_ratio": 1.7376708836732853,
+        "mean_earnings_growth": 0.035993422097446874
+      },
+      "6y_mfFalse_realTrue": {
+        "mae": 0.015698321896310215,
+        "r_squared": 0.3657638457787109,
+        "correlation": -0.680260594855932,
+        "mean_valuation_ratio": 0.41824859725664043,
+        "mean_earnings_growth": 0.0004176414101075184
+      },
+      "6y_mfTrue_realTrue": {
+        "mae": 0.021658837674143585,
+        "r_squared": -0.10332391997541368,
+        "correlation": -0.5545183882303102,
+        "mean_valuation_ratio": 1.7376708836732853,
+        "mean_earnings_growth": 0.0004176414101075184
+      },
+      "7y_mfFalse_realFalse": {
+        "mae": 0.012125188330675413,
+        "r_squared": 0.6453971147185542,
+        "correlation": -0.8347416926618448,
+        "mean_valuation_ratio": 0.4187297940128749,
+        "mean_earnings_growth": 0.03662223653151868
+      },
+      "7y_mfTrue_realFalse": {
+        "mae": 0.016335168733748802,
+        "r_squared": 0.35601021402931443,
+        "correlation": -0.7015717859012289,
+        "mean_valuation_ratio": 1.743421847068829,
+        "mean_earnings_growth": 0.03662223653151868
+      },
+      "7y_mfFalse_realTrue": {
+        "mae": 0.013978297208703971,
+        "r_squared": 0.3727366898164193,
+        "correlation": -0.6822155510673505,
+        "mean_valuation_ratio": 0.4187297940128749,
+        "mean_earnings_growth": 0.0005931791873849618
+      },
+      "7y_mfTrue_realTrue": {
+        "mae": 0.019587743030596842,
+        "r_squared": -0.08254943460757524,
+        "correlation": -0.541374523510589,
+        "mean_valuation_ratio": 1.743421847068829,
+        "mean_earnings_growth": 0.0005931791873849618
+      },
+      "8y_mfFalse_realFalse": {
+        "mae": 0.011410458105481039,
+        "r_squared": 0.6357300964451343,
+        "correlation": -0.834979707216296,
+        "mean_valuation_ratio": 0.41900152491980186,
+        "mean_earnings_growth": 0.03738086640438545
+      },
+      "8y_mfTrue_realFalse": {
+        "mae": 0.014791833950808738,
+        "r_squared": 0.38064423341034526,
+        "correlation": -0.7085187225383923,
+        "mean_valuation_ratio": 1.7444872584578226,
+        "mean_earnings_growth": 0.03738086640438545
+      },
+      "8y_mfFalse_realTrue": {
+        "mae": 0.012799053780087248,
+        "r_squared": 0.3483913284608672,
+        "correlation": -0.656562936375123,
+        "mean_valuation_ratio": 0.41900152491980186,
+        "mean_earnings_growth": 0.0011778372876332717
+      },
+      "8y_mfTrue_realTrue": {
+        "mae": 0.017665819584483416,
+        "r_squared": -0.0820626050499611,
+        "correlation": -0.5283560011290004,
+        "mean_valuation_ratio": 1.7444872584578226,
+        "mean_earnings_growth": 0.0011778372876332717
+      },
+      "9y_mfFalse_realFalse": {
+        "mae": 0.010922050899196676,
+        "r_squared": 0.609287418681079,
+        "correlation": -0.8248205485999386,
+        "mean_valuation_ratio": 0.4185569753104217,
+        "mean_earnings_growth": 0.03831096008114573
+      },
+      "9y_mfTrue_realFalse": {
+        "mae": 0.013488357434945648,
+        "r_squared": 0.3916410146318331,
+        "correlation": -0.7179129649523556,
+        "mean_valuation_ratio": 1.7428359876097497,
+        "mean_earnings_growth": 0.03831096008114573
+      },
+      "9y_mfFalse_realTrue": {
+        "mae": 0.012072831348055117,
+        "r_squared": 0.2949651542323981,
+        "correlation": -0.6202074126804948,
+        "mean_valuation_ratio": 0.4185569753104217,
+        "mean_earnings_growth": 0.0014588550747628955
+      },
+      "9y_mfTrue_realTrue": {
+        "mae": 0.015511622630888185,
+        "r_squared": -0.10851966119705714,
+        "correlation": -0.5134291352252757,
+        "mean_valuation_ratio": 1.7428359876097497,
+        "mean_earnings_growth": 0.0014588550747628955
+      },
+      "10y_mfFalse_realFalse": {
+        "mae": 0.010243611369818509,
+        "r_squared": 0.5811860662310391,
+        "correlation": -0.8081318953524353,
+        "mean_valuation_ratio": 0.4172956982329611,
+        "mean_earnings_growth": 0.038772023986241744
+      },
+      "10y_mfTrue_realFalse": {
+        "mae": 0.012053772201635863,
+        "r_squared": 0.3682884273654191,
+        "correlation": -0.7121082464867455,
+        "mean_valuation_ratio": 1.7369584530827056,
+        "mean_earnings_growth": 0.038772023986241744
+      },
+      "10y_mfFalse_realTrue": {
+        "mae": 0.011463473641688659,
+        "r_squared": 0.17183570230564493,
+        "correlation": -0.5775311242899656,
+        "mean_valuation_ratio": 0.4172956982329611,
+        "mean_earnings_growth": 0.0005284511900373103
+      },
+      "10y_mfTrue_realTrue": {
+        "mae": 0.014194890712147799,
+        "r_squared": -0.2330971674132989,
+        "correlation": -0.4840123241301287,
+        "mean_valuation_ratio": 1.7369584530827056,
+        "mean_earnings_growth": 0.0005284511900373103
+      }
+    },
+    "forecasts": {
+      "3y_mfFalse_realFalse": {
+        "mean_return": 0.036537334255842054,
+        "std_return": 0.10058954819568545,
+        "current_ratio": 0.4163613231552163
+      },
+      "3y_mfTrue_realFalse": {
+        "mean_return": 0.5108916759538948,
+        "std_return": 0.10058954819568545,
+        "current_ratio": 0.4163613231552163
+      },
+      "3y_mfFalse_realTrue": {
+        "mean_return": 0.0030511955638237117,
+        "std_return": 0.10046799864752412,
+        "current_ratio": 0.4163613231552163
+      },
+      "3y_mfTrue_realTrue": {
+        "mean_return": 0.4774055372618765,
+        "std_return": 0.10046799864752412,
+        "current_ratio": 0.4163613231552163
+      },
+      "4y_mfFalse_realFalse": {
+        "mean_return": 0.03599935260870297,
+        "std_return": 0.10044824826556713,
+        "current_ratio": 0.4163613231552163
+      },
+      "4y_mfTrue_realFalse": {
+        "mean_return": 0.39195296710645994,
+        "std_return": 0.10044824826556713,
+        "current_ratio": 0.4163613231552163
+      },
+      "4y_mfFalse_realTrue": {
+        "mean_return": 0.001586074126585875,
+        "std_return": 0.10034436909524509,
+        "current_ratio": 0.4163613231552163
+      },
+      "4y_mfTrue_realTrue": {
+        "mean_return": 0.3575396886243428,
+        "std_return": 0.10034436909524509,
+        "current_ratio": 0.4163613231552163
+      },
+      "5y_mfFalse_realFalse": {
+        "mean_return": 0.036096374232125014,
+        "std_return": 0.10035926829162659,
+        "current_ratio": 0.4163613231552163
+      },
+      "5y_mfTrue_realFalse": {
+        "mean_return": 0.32069976364014907,
+        "std_return": 0.10035926829162659,
+        "current_ratio": 0.4163613231552163
+      },
+      "5y_mfFalse_realTrue": {
+        "mean_return": 0.001163266509545314,
+        "std_return": 0.10028053325341559,
+        "current_ratio": 0.4163613231552163
+      },
+      "5y_mfTrue_realTrue": {
+        "mean_return": 0.28576665591756933,
+        "std_return": 0.10028053325341559,
+        "current_ratio": 0.4163613231552163
+      },
+      "6y_mfFalse_realFalse": {
+        "mean_return": 0.03674717834213958,
+        "std_return": 0.10029228336176838,
+        "current_ratio": 0.4163613231552163
+      },
+      "6y_mfTrue_realFalse": {
+        "mean_return": 0.27411800115823887,
+        "std_return": 0.10029228336176838,
+        "current_ratio": 0.4163613231552163
+      },
+      "6y_mfFalse_realTrue": {
+        "mean_return": 0.0011713976548002232,
+        "std_return": 0.10023966204446266,
+        "current_ratio": 0.4163613231552163
+      },
+      "6y_mfTrue_realTrue": {
+        "mean_return": 0.2385422204708995,
+        "std_return": 0.10023966204446266,
+        "current_ratio": 0.4163613231552163
+      },
+      "7y_mfFalse_realFalse": {
+        "mean_return": 0.037432576576918015,
+        "std_return": 0.10024820062098143,
+        "current_ratio": 0.4163613231552163
+      },
+      "7y_mfTrue_realFalse": {
+        "mean_return": 0.24120103528087783,
+        "std_return": 0.10024820062098143,
+        "current_ratio": 0.4163613231552163
+      },
+      "7y_mfFalse_realTrue": {
+        "mean_return": 0.0014035192327843016,
+        "std_return": 0.1002106611621143,
+        "current_ratio": 0.4163613231552163
+      },
+      "7y_mfTrue_realTrue": {
+        "mean_return": 0.20517197793674413,
+        "std_return": 0.1002106611621143,
+        "current_ratio": 0.4163613231552163
+      },
+      "8y_mfFalse_realFalse": {
+        "mean_return": 0.03817100525295667,
+        "std_return": 0.10021173960840697,
+        "current_ratio": 0.4163613231552163
+      },
+      "8y_mfTrue_realFalse": {
+        "mean_return": 0.21646367993067517,
+        "std_return": 0.10021173960840697,
+        "current_ratio": 0.4163613231552163
+      },
+      "8y_mfFalse_realTrue": {
+        "mean_return": 0.0019679761362044945,
+        "std_return": 0.10018346296884778,
+        "current_ratio": 0.4163613231552163
+      },
+      "8y_mfTrue_realTrue": {
+        "mean_return": 0.18026065081392298,
+        "std_return": 0.10018346296884778,
+        "current_ratio": 0.4163613231552163
+      },
+      "9y_mfFalse_realFalse": {
+        "mean_return": 0.038895357173461785,
+        "std_return": 0.10017856576200852,
+        "current_ratio": 0.4163613231552163
+      },
+      "9y_mfTrue_realFalse": {
+        "mean_return": 0.19739045950136622,
+        "std_return": 0.10017856576200852,
+        "current_ratio": 0.4163613231552163
+      },
+      "9y_mfFalse_realTrue": {
+        "mean_return": 0.0020432521670789537,
+        "std_return": 0.10016708535055172,
+        "current_ratio": 0.4163613231552163
+      },
+      "9y_mfTrue_realTrue": {
+        "mean_return": 0.16053835449498338,
+        "std_return": 0.10016708535055172,
+        "current_ratio": 0.4163613231552163
+      },
+      "10y_mfFalse_realFalse": {
+        "mean_return": 0.03899618702812465,
+        "std_return": 0.10016298850356839,
+        "current_ratio": 0.4163613231552163
+      },
+      "10y_mfTrue_realFalse": {
+        "mean_return": 0.18160576384858365,
+        "std_return": 0.10016298850356839,
+        "current_ratio": 0.4163613231552163
+      },
+      "10y_mfFalse_realTrue": {
+        "mean_return": 0.000752614231920218,
+        "std_return": 0.10014047992836309,
+        "current_ratio": 0.4163613231552163
+      },
+      "10y_mfTrue_realTrue": {
+        "mean_return": 0.1433621910523792,
+        "std_return": 0.10014047992836309,
+        "current_ratio": 0.4163613231552163
+      }
+    },
+    "config": {
+      "data": {
+        "data_dir": "data/",
+        "files": [
+          {
+            "key": "hpi",
+            "default": "USA House Price Index.csv",
+            "required": true
+          },
+          {
+            "key": "earnings_nominal",
+            "default": "USA Median Weekly Nominal Earnings.csv",
+            "required": true
+          },
+          {
+            "key": "earnings_real",
+            "default": "USA Median Weekly Real Earnings.csv",
+            "required": true
+          },
+          {
+            "key": "mortgage_rate",
+            "default": "USA Mortgage Rate 30-Year.csv",
+            "required": true
+          },
+          {
+            "key": "cpi",
+            "default": "USA CPI.csv",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "variables": [
+          "HPI",
+          "HPI_REAL",
+          "EARNINGS",
+          "EARNINGS_REAL",
+          "EARNINGS_GROWTH",
+          "EARNINGS_GROWTH_REAL",
+          "RATIO",
+          "RATIO_MF",
+          "ANN_RETURN",
+          "ANN_RETURN_REAL",
+          "MORTGAGE_RATE",
+          "MORTGAGE_FACTOR",
+          "CPI",
+          "MORTGAGE_YEARS",
+          "EARNINGS_GROWTH_PERIODS",
+          "FORECASTING_YEARS",
+          "DEFAULT_FORECAST_YEARS",
+          "USE_MORTGAGE_FACTOR",
+          "USE_REAL_RETURNS",
+          "MEAN_VALUATION_RATIO"
+        ],
+        "properties": {
+          "HPI": {
+            "display_name": "HPI",
+            "type": "double",
+            "default": 0.0
+          },
+          "HPI_REAL": {
+            "display_name": "HPI (Real)",
+            "type": "double",
+            "default": 0.0
+          },
+          "EARNINGS": {
+            "display_name": "Earnings",
+            "type": "double",
+            "default": 0.0
+          },
+          "EARNINGS_REAL": {
+            "display_name": "Earnings (Real)",
+            "type": "double",
+            "default": 0.0
+          },
+          "EARNINGS_GROWTH": {
+            "display_name": "Earnings Growth",
+            "type": "double",
+            "default": 0.0
+          },
+          "EARNINGS_GROWTH_REAL": {
+            "display_name": "Earnings Growth (Real)",
+            "type": "double",
+            "default": 0.0
+          },
+          "RATIO": {
+            "display_name": "HPI/Earnings",
+            "type": "double",
+            "default": 0.0
+          },
+          "RATIO_MF": {
+            "display_name": "MF x HPI/Earnings",
+            "type": "double",
+            "default": 0.0
+          },
+          "ANN_RETURN": {
+            "display_name": "Ann. Return",
+            "type": "double",
+            "default": 0.0
+          },
+          "ANN_RETURN_REAL": {
+            "display_name": "Ann. Return (Real)",
+            "type": "double",
+            "default": 0.0
+          },
+          "MORTGAGE_RATE": {
+            "display_name": "Mortgage Rate 30-Year",
+            "type": "double",
+            "default": 0.0
+          },
+          "MORTGAGE_FACTOR": {
+            "display_name": "Mortgage Factor",
+            "type": "double",
+            "default": 1.0
+          },
+          "CPI": {
+            "display_name": "CPI",
+            "type": "double",
+            "default": 100.0
+          },
+          "MORTGAGE_YEARS": {
+            "display_name": "Mortgage Years",
+            "type": "int",
+            "default": 30
+          },
+          "EARNINGS_GROWTH_PERIODS": {
+            "display_name": "Earnings Growth Periods",
+            "type": "int",
+            "default": 4
+          },
+          "FORECASTING_YEARS": {
+            "display_name": "Forecasting Years",
+            "type": "array",
+            "default": [
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ]
+          },
+          "DEFAULT_FORECAST_YEARS": {
+            "display_name": "Default Forecast Years",
+            "type": "int",
+            "default": 5
+          },
+          "USE_MORTGAGE_FACTOR": {
+            "display_name": "Use Mortgage Factor",
+            "type": "bool",
+            "default": false
+          },
+          "USE_REAL_RETURNS": {
+            "display_name": "Use Real Returns",
+            "type": "bool",
+            "default": false
+          },
+          "MEAN_VALUATION_RATIO": {
+            "display_name": "Mean Valuation Ratio",
+            "type": "double",
+            "default": null
+          }
+        }
+      },
+      "plotting": {
+        "figure_size": [
+          14,
+          8
+        ],
+        "grid": true,
+        "color_map": "rainbow"
+      }
+    }
+  },
+  "processed_data": {
+    "shape": [
+      160,
+      13
+    ],
+    "columns": [
+      "CPI",
+      "HPI",
+      "Earnings",
+      "Earnings (Real)",
+      "Mortgage Rate 30-Year",
+      "HPI (Real)",
+      "Mortgage Factor",
+      "Earnings Growth",
+      "Earnings Growth (Real)",
+      "HPI/Earnings",
+      "MF x HPI/Earnings",
+      "Ann. Return",
+      "Ann. Return (Real)"
+    ],
+    "date_range": {
+      "start": "1979-01-01T00:00:00",
+      "end": "2018-10-01T00:00:00"
+    }
+  },
+  "results": {
+    "3y_mfFalse_realFalse": {
+      "mae": 0.02732941571465685,
+      "r_squared": -0.0033690996768538373,
+      "correlation": -0.5458123183915623,
+      "mean_valuation_ratio": 0.41897284244678873,
+      "mean_earnings_growth": 0.03445311622081912
+    },
+    "3y_mfTrue_realFalse": {
+      "mae": 0.03740302910838998,
+      "r_squared": -0.7464421035595705,
+      "correlation": -0.5784007797407501,
+      "mean_valuation_ratio": 1.738658517232625,
+      "mean_earnings_growth": 0.03445311622081912
+    },
+    "3y_mfFalse_realTrue": {
+      "mae": 0.03157411633339656,
+      "r_squared": -0.3058901563142198,
+      "correlation": -0.4321098030835811,
+      "mean_valuation_ratio": 0.41897284244678873,
+      "mean_earnings_growth": 0.0009669775288007748
+    },
+    "3y_mfTrue_realTrue": {
+      "mae": 0.041164148364522125,
+      "r_squared": -1.2933921239730406,
+      "correlation": -0.43152350784699284,
+      "mean_valuation_ratio": 1.738658517232625,
+      "mean_earnings_growth": 0.0009669775288007748
+    },
+    "4y_mfFalse_realFalse": {
+      "mae": 0.02009032709724475,
+      "r_squared": 0.3836881167981905,
+      "correlation": -0.6701058061591305,
+      "mean_valuation_ratio": 0.4183844502542681,
+      "mean_earnings_growth": 0.03478752792816512
+    },
+    "4y_mfTrue_realFalse": {
+      "mae": 0.027074052775200304,
+      "r_squared": -0.10136518396580163,
+      "correlation": -0.635253303661209,
+      "mean_valuation_ratio": 1.7375219409895302,
+      "mean_earnings_growth": 0.03478752792816512
+    },
+    "4y_mfFalse_realTrue": {
+      "mae": 0.02376543689525719,
+      "r_squared": 0.10646255840904928,
+      "correlation": -0.5494609302112864,
+      "mean_valuation_ratio": 0.4183844502542681,
+      "mean_earnings_growth": 0.0003742494460480266
+    },
+    "4y_mfTrue_realTrue": {
+      "mae": 0.03164012612592399,
+      "r_squared": -0.5735026291415644,
+      "correlation": -0.48808344565745515,
+      "mean_valuation_ratio": 1.7375219409895302,
+      "mean_earnings_growth": 0.0003742494460480266
+    },
+    "5y_mfFalse_realFalse": {
+      "mae": 0.015839299675235098,
+      "r_squared": 0.5531759543933652,
+      "correlation": -0.760054316643252,
+      "mean_valuation_ratio": 0.41812454913886266,
+      "mean_earnings_growth": 0.03525119342501974
+    },
+    "5y_mfTrue_realFalse": {
+      "mae": 0.02043564801610269,
+      "r_squared": 0.1696857098958432,
+      "correlation": -0.6714891578058717,
+      "mean_valuation_ratio": 1.735058309555723,
+      "mean_earnings_growth": 0.03525119342501974
+    },
+    "5y_mfFalse_realTrue": {
+      "mae": 0.018912903592221635,
+      "r_squared": 0.2902749820280305,
+      "correlation": -0.634806882141677,
+      "mean_valuation_ratio": 0.41812454913886266,
+      "mean_earnings_growth": 0.0003180857024400414
+    },
+    "5y_mfTrue_realTrue": {
+      "mae": 0.025647778730663106,
+      "r_squared": -0.25575907482603144,
+      "correlation": -0.5297961401277606,
+      "mean_valuation_ratio": 1.735058309555723,
+      "mean_earnings_growth": 0.0003180857024400414
+    },
+    "6y_mfFalse_realFalse": {
+      "mae": 0.01341855296519052,
+      "r_squared": 0.6263407053748331,
+      "correlation": -0.8137937092164289,
+      "mean_valuation_ratio": 0.41824859725664043,
+      "mean_earnings_growth": 0.035993422097446874
+    },
+    "6y_mfTrue_realFalse": {
+      "mae": 0.017661257500927906,
+      "r_squared": 0.2991220878271579,
+      "correlation": -0.6929237482343198,
+      "mean_valuation_ratio": 1.7376708836732853,
+      "mean_earnings_growth": 0.035993422097446874
+    },
+    "6y_mfFalse_realTrue": {
+      "mae": 0.015698321896310215,
+      "r_squared": 0.3657638457787109,
+      "correlation": -0.680260594855932,
+      "mean_valuation_ratio": 0.41824859725664043,
+      "mean_earnings_growth": 0.0004176414101075184
+    },
+    "6y_mfTrue_realTrue": {
+      "mae": 0.021658837674143585,
+      "r_squared": -0.10332391997541368,
+      "correlation": -0.5545183882303102,
+      "mean_valuation_ratio": 1.7376708836732853,
+      "mean_earnings_growth": 0.0004176414101075184
+    },
+    "7y_mfFalse_realFalse": {
+      "mae": 0.012125188330675413,
+      "r_squared": 0.6453971147185542,
+      "correlation": -0.8347416926618448,
+      "mean_valuation_ratio": 0.4187297940128749,
+      "mean_earnings_growth": 0.03662223653151868
+    },
+    "7y_mfTrue_realFalse": {
+      "mae": 0.016335168733748802,
+      "r_squared": 0.35601021402931443,
+      "correlation": -0.7015717859012289,
+      "mean_valuation_ratio": 1.743421847068829,
+      "mean_earnings_growth": 0.03662223653151868
+    },
+    "7y_mfFalse_realTrue": {
+      "mae": 0.013978297208703971,
+      "r_squared": 0.3727366898164193,
+      "correlation": -0.6822155510673505,
+      "mean_valuation_ratio": 0.4187297940128749,
+      "mean_earnings_growth": 0.0005931791873849618
+    },
+    "7y_mfTrue_realTrue": {
+      "mae": 0.019587743030596842,
+      "r_squared": -0.08254943460757524,
+      "correlation": -0.541374523510589,
+      "mean_valuation_ratio": 1.743421847068829,
+      "mean_earnings_growth": 0.0005931791873849618
+    },
+    "8y_mfFalse_realFalse": {
+      "mae": 0.011410458105481039,
+      "r_squared": 0.6357300964451343,
+      "correlation": -0.834979707216296,
+      "mean_valuation_ratio": 0.41900152491980186,
+      "mean_earnings_growth": 0.03738086640438545
+    },
+    "8y_mfTrue_realFalse": {
+      "mae": 0.014791833950808738,
+      "r_squared": 0.38064423341034526,
+      "correlation": -0.7085187225383923,
+      "mean_valuation_ratio": 1.7444872584578226,
+      "mean_earnings_growth": 0.03738086640438545
+    },
+    "8y_mfFalse_realTrue": {
+      "mae": 0.012799053780087248,
+      "r_squared": 0.3483913284608672,
+      "correlation": -0.656562936375123,
+      "mean_valuation_ratio": 0.41900152491980186,
+      "mean_earnings_growth": 0.0011778372876332717
+    },
+    "8y_mfTrue_realTrue": {
+      "mae": 0.017665819584483416,
+      "r_squared": -0.0820626050499611,
+      "correlation": -0.5283560011290004,
+      "mean_valuation_ratio": 1.7444872584578226,
+      "mean_earnings_growth": 0.0011778372876332717
+    },
+    "9y_mfFalse_realFalse": {
+      "mae": 0.010922050899196676,
+      "r_squared": 0.609287418681079,
+      "correlation": -0.8248205485999386,
+      "mean_valuation_ratio": 0.4185569753104217,
+      "mean_earnings_growth": 0.03831096008114573
+    },
+    "9y_mfTrue_realFalse": {
+      "mae": 0.013488357434945648,
+      "r_squared": 0.3916410146318331,
+      "correlation": -0.7179129649523556,
+      "mean_valuation_ratio": 1.7428359876097497,
+      "mean_earnings_growth": 0.03831096008114573
+    },
+    "9y_mfFalse_realTrue": {
+      "mae": 0.012072831348055117,
+      "r_squared": 0.2949651542323981,
+      "correlation": -0.6202074126804948,
+      "mean_valuation_ratio": 0.4185569753104217,
+      "mean_earnings_growth": 0.0014588550747628955
+    },
+    "9y_mfTrue_realTrue": {
+      "mae": 0.015511622630888185,
+      "r_squared": -0.10851966119705714,
+      "correlation": -0.5134291352252757,
+      "mean_valuation_ratio": 1.7428359876097497,
+      "mean_earnings_growth": 0.0014588550747628955
+    },
+    "10y_mfFalse_realFalse": {
+      "mae": 0.010243611369818509,
+      "r_squared": 0.5811860662310391,
+      "correlation": -0.8081318953524353,
+      "mean_valuation_ratio": 0.4172956982329611,
+      "mean_earnings_growth": 0.038772023986241744
+    },
+    "10y_mfTrue_realFalse": {
+      "mae": 0.012053772201635863,
+      "r_squared": 0.3682884273654191,
+      "correlation": -0.7121082464867455,
+      "mean_valuation_ratio": 1.7369584530827056,
+      "mean_earnings_growth": 0.038772023986241744
+    },
+    "10y_mfFalse_realTrue": {
+      "mae": 0.011463473641688659,
+      "r_squared": 0.17183570230564493,
+      "correlation": -0.5775311242899656,
+      "mean_valuation_ratio": 0.4172956982329611,
+      "mean_earnings_growth": 0.0005284511900373103
+    },
+    "10y_mfTrue_realTrue": {
+      "mae": 0.014194890712147799,
+      "r_squared": -0.2330971674132989,
+      "correlation": -0.4840123241301287,
+      "mean_valuation_ratio": 1.7369584530827056,
+      "mean_earnings_growth": 0.0005284511900373103
+    }
+  },
+  "forecasts": {
+    "3y_mfFalse_realFalse": {
+      "mean_return": 0.036537334255842054,
+      "std_return": 0.10058954819568545,
+      "current_ratio": 0.4163613231552163
+    },
+    "3y_mfTrue_realFalse": {
+      "mean_return": 0.5108916759538948,
+      "std_return": 0.10058954819568545,
+      "current_ratio": 0.4163613231552163
+    },
+    "3y_mfFalse_realTrue": {
+      "mean_return": 0.0030511955638237117,
+      "std_return": 0.10046799864752412,
+      "current_ratio": 0.4163613231552163
+    },
+    "3y_mfTrue_realTrue": {
+      "mean_return": 0.4774055372618765,
+      "std_return": 0.10046799864752412,
+      "current_ratio": 0.4163613231552163
+    },
+    "4y_mfFalse_realFalse": {
+      "mean_return": 0.03599935260870297,
+      "std_return": 0.10044824826556713,
+      "current_ratio": 0.4163613231552163
+    },
+    "4y_mfTrue_realFalse": {
+      "mean_return": 0.39195296710645994,
+      "std_return": 0.10044824826556713,
+      "current_ratio": 0.4163613231552163
+    },
+    "4y_mfFalse_realTrue": {
+      "mean_return": 0.001586074126585875,
+      "std_return": 0.10034436909524509,
+      "current_ratio": 0.4163613231552163
+    },
+    "4y_mfTrue_realTrue": {
+      "mean_return": 0.3575396886243428,
+      "std_return": 0.10034436909524509,
+      "current_ratio": 0.4163613231552163
+    },
+    "5y_mfFalse_realFalse": {
+      "mean_return": 0.036096374232125014,
+      "std_return": 0.10035926829162659,
+      "current_ratio": 0.4163613231552163
+    },
+    "5y_mfTrue_realFalse": {
+      "mean_return": 0.32069976364014907,
+      "std_return": 0.10035926829162659,
+      "current_ratio": 0.4163613231552163
+    },
+    "5y_mfFalse_realTrue": {
+      "mean_return": 0.001163266509545314,
+      "std_return": 0.10028053325341559,
+      "current_ratio": 0.4163613231552163
+    },
+    "5y_mfTrue_realTrue": {
+      "mean_return": 0.28576665591756933,
+      "std_return": 0.10028053325341559,
+      "current_ratio": 0.4163613231552163
+    },
+    "6y_mfFalse_realFalse": {
+      "mean_return": 0.03674717834213958,
+      "std_return": 0.10029228336176838,
+      "current_ratio": 0.4163613231552163
+    },
+    "6y_mfTrue_realFalse": {
+      "mean_return": 0.27411800115823887,
+      "std_return": 0.10029228336176838,
+      "current_ratio": 0.4163613231552163
+    },
+    "6y_mfFalse_realTrue": {
+      "mean_return": 0.0011713976548002232,
+      "std_return": 0.10023966204446266,
+      "current_ratio": 0.4163613231552163
+    },
+    "6y_mfTrue_realTrue": {
+      "mean_return": 0.2385422204708995,
+      "std_return": 0.10023966204446266,
+      "current_ratio": 0.4163613231552163
+    },
+    "7y_mfFalse_realFalse": {
+      "mean_return": 0.037432576576918015,
+      "std_return": 0.10024820062098143,
+      "current_ratio": 0.4163613231552163
+    },
+    "7y_mfTrue_realFalse": {
+      "mean_return": 0.24120103528087783,
+      "std_return": 0.10024820062098143,
+      "current_ratio": 0.4163613231552163
+    },
+    "7y_mfFalse_realTrue": {
+      "mean_return": 0.0014035192327843016,
+      "std_return": 0.1002106611621143,
+      "current_ratio": 0.4163613231552163
+    },
+    "7y_mfTrue_realTrue": {
+      "mean_return": 0.20517197793674413,
+      "std_return": 0.1002106611621143,
+      "current_ratio": 0.4163613231552163
+    },
+    "8y_mfFalse_realFalse": {
+      "mean_return": 0.03817100525295667,
+      "std_return": 0.10021173960840697,
+      "current_ratio": 0.4163613231552163
+    },
+    "8y_mfTrue_realFalse": {
+      "mean_return": 0.21646367993067517,
+      "std_return": 0.10021173960840697,
+      "current_ratio": 0.4163613231552163
+    },
+    "8y_mfFalse_realTrue": {
+      "mean_return": 0.0019679761362044945,
+      "std_return": 0.10018346296884778,
+      "current_ratio": 0.4163613231552163
+    },
+    "8y_mfTrue_realTrue": {
+      "mean_return": 0.18026065081392298,
+      "std_return": 0.10018346296884778,
+      "current_ratio": 0.4163613231552163
+    },
+    "9y_mfFalse_realFalse": {
+      "mean_return": 0.038895357173461785,
+      "std_return": 0.10017856576200852,
+      "current_ratio": 0.4163613231552163
+    },
+    "9y_mfTrue_realFalse": {
+      "mean_return": 0.19739045950136622,
+      "std_return": 0.10017856576200852,
+      "current_ratio": 0.4163613231552163
+    },
+    "9y_mfFalse_realTrue": {
+      "mean_return": 0.0020432521670789537,
+      "std_return": 0.10016708535055172,
+      "current_ratio": 0.4163613231552163
+    },
+    "9y_mfTrue_realTrue": {
+      "mean_return": 0.16053835449498338,
+      "std_return": 0.10016708535055172,
+      "current_ratio": 0.4163613231552163
+    },
+    "10y_mfFalse_realFalse": {
+      "mean_return": 0.03899618702812465,
+      "std_return": 0.10016298850356839,
+      "current_ratio": 0.4163613231552163
+    },
+    "10y_mfTrue_realFalse": {
+      "mean_return": 0.18160576384858365,
+      "std_return": 0.10016298850356839,
+      "current_ratio": 0.4163613231552163
+    },
+    "10y_mfFalse_realTrue": {
+      "mean_return": 0.000752614231920218,
+      "std_return": 0.10014047992836309,
+      "current_ratio": 0.4163613231552163
+    },
+    "10y_mfTrue_realTrue": {
+      "mean_return": 0.1433621910523792,
+      "std_return": 0.10014047992836309,
+      "current_ratio": 0.4163613231552163
+    }
+  }
+}

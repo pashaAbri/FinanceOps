@@ -23,8 +23,12 @@ class DataLoader:
             self.config = json.load(f)
         
         self.data_dir = self.config['data']['data_dir']
-        self.files = self.config['data']['files']
-        self.variables = self.config['variables']
+        # Convert files array to dictionary for easy access
+        self.files = {file_config['key']: file_config['default'] 
+                     for file_config in self.config['data']['files']}
+        # Create variables dictionary from parameters structure
+        self.variables = {var: self.config['parameters']['properties'][var]['display_name'] 
+                         for var in self.config['parameters']['variables']}
     
     def _load_data(self, filename: str, new_name: str = None) -> pd.Series:
         """

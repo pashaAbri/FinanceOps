@@ -230,7 +230,9 @@ def create_forecast_model(df: pd.DataFrame,
     with open(config_path, 'r') as f:
         config = json.load(f)
     
-    variables = config['variables']
+    # Create variables dictionary from parameters structure
+    variables = {var: config['parameters']['properties'][var]['display_name'] 
+                for var in config['parameters']['variables']}
     
     # Determine required columns
     if use_mortgage_factor:

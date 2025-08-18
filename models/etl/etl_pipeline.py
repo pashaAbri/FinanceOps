@@ -90,7 +90,7 @@ class HPIETLPipeline:
             raise ValueError("Must run extract() first")
         
         if years is None:
-            years = self.config['model']['default_forecast_years']
+            years = self.config['parameters']['properties']['DEFAULT_FORECAST_YEARS']['default']
         
         try:
             self.processed_data = self.preprocessor.preprocess_full_pipeline(
@@ -209,7 +209,9 @@ class HPIETLPipeline:
         
         :return: Dictionary describing feature engineering steps
         """
-        variables = self.config['variables']
+        # Create variables dictionary from parameters structure
+        variables = {var: self.config['parameters']['properties'][var]['display_name'] 
+                    for var in self.config['parameters']['variables']}
         
         return {
             'base_features': [

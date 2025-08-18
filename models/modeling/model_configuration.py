@@ -42,7 +42,9 @@ class ModelConfiguration:
         self.years = years
         self.use_mortgage_factor = use_mortgage_factor
         self.use_real_returns = use_real_returns
-        self.variables = self.config['variables']
+        # Create variables dictionary from parameters structure
+        self.variables = {var: self.config['parameters']['properties'][var]['display_name'] 
+                         for var in self.config['parameters']['variables']}
         
         # Initialize column names
         self._setup_column_names()

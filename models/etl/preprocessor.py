@@ -22,8 +22,15 @@ class HPIPreprocessor:
         with open(config_path, 'r') as f:
             self.config = json.load(f)
         
-        self.variables = self.config['variables']
-        self.model_config = self.config['model']
+        # Create variables dictionary from parameters structure
+        self.variables = {var: self.config['parameters']['properties'][var]['display_name'] 
+                         for var in self.config['parameters']['variables']}
+        # Create model parameters dictionary from parameters structure
+        self.model_config = {
+            'mortgage_years': self.config['parameters']['properties']['MORTGAGE_YEARS']['default'],
+            'earnings_growth_periods': self.config['parameters']['properties']['EARNINGS_GROWTH_PERIODS']['default'],
+            'default_forecast_years': self.config['parameters']['properties']['DEFAULT_FORECAST_YEARS']['default']
+        }
     
     def combine_data(self, data_dict: Dict[str, pd.Series]) -> pd.DataFrame:
         """Combine all time series into a single DataFrame."""
