@@ -13,40 +13,40 @@ for HPI prediction, organized into specialized components:
 """
 
 # Main orchestrator (backward compatible interface)
-from forecasting_hpi.models.modeling.forecast_model import (
+from models.modeling.forecast_model import (
     ForecastModel, create_forecast_model, print_statistics
 )
 
 # Individual components (for advanced usage)
-from forecasting_hpi.models.modeling.model_configuration import (
+from models.modeling.model_configuration import (
     ModelConfiguration, create_model_configuration
 )
-from forecasting_hpi.models.modeling.statistics_calculator import (
+from models.modeling.statistics_calculator import (
     StatisticsCalculator, create_statistics_calculator
 )
-from forecasting_hpi.models.modeling.forecasting_engine import (
+from models.modeling.forecasting_engine import (
     ForecastingEngine, create_forecasting_engine
 )
-from forecasting_hpi.models.modeling.model_evaluator import (
+from models.modeling.model_evaluator import (
     ModelEvaluator, create_model_evaluator
 )
-from forecasting_hpi.models.modeling.model_utilities import (
+from models.modeling.model_utilities import (
     ModelPrinter, ModelSerializer, ModelValidator, ModelComparison
 )
 
 # Step functions for modeling pipeline
-from forecasting_hpi.models.modeling.step_1_model_training import (
+from models.modeling.step_1_model_training import (
     ModelTrainer, train_forecasting_models, create_model_trainer
 )
-from forecasting_hpi.models.modeling.step_2_model_evaluation import (
+from models.modeling.step_2_model_evaluation import (
     ModelEvaluationEngine, evaluate_forecasting_models, create_model_evaluation_engine
 )
-from forecasting_hpi.models.modeling.step_3_forecast_generation import (
+from models.modeling.step_3_forecast_generation import (
     ForecastGenerator, generate_forecasts, create_forecast_generator
 )
 
 # Modeling pipeline for orchestrating all steps
-from forecasting_hpi.models.modeling.modeling_pipeline import (
+from models.modeling.modeling_pipeline import (
     HPIModelingPipeline, run_modeling_pipeline, create_modeling_pipeline
 )
 

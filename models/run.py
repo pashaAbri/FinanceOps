@@ -10,10 +10,10 @@ from datetime import datetime
 from typing import Dict, Any, Optional
 
 # Import path management
-from forecasting_hpi.models.paths import paths
+from models.paths import paths
 
 # Import workflow using the new system
-from forecasting_hpi.models.workflows import HPIForecastingWorkflow
+from models.workflows import HPIForecastingWorkflow
 
 
 def save_results_to_output(results: Dict[str, Any], filename: str = None):
@@ -104,7 +104,7 @@ def run_quick_forecast(current_ratio: float, years: int = 5) -> Dict[str, float]
         workflow.step_2_preprocess_data(years=years)
         
         # Train a single model (basic configuration)
-        from forecasting_hpi.models.modeling import ForecastModel
+        from models.modeling import ForecastModel
         
         model = ForecastModel(
             df=workflow.processed_data,

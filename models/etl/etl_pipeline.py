@@ -11,11 +11,11 @@ import json
 from typing import Dict, Any, Optional
 
 # Import path management
-from forecasting_hpi.models.paths import paths
+from models.paths import paths
 
 # Import ETL components
-from forecasting_hpi.models.etl.data_loader import DataLoader
-from forecasting_hpi.models.etl.preprocessor import HPIPreprocessor
+from models.etl.data_loader import DataLoader
+from models.etl.preprocessor import HPIPreprocessor
 
 
 class HPIETLPipeline:

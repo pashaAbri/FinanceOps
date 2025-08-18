@@ -11,10 +11,10 @@ import json
 from typing import Dict, Any, List, Optional, Union
 from datetime import datetime
 
-from forecasting_hpi.models.modeling.model_configuration import ModelConfiguration
-from forecasting_hpi.models.modeling.statistics_calculator import StatisticsCalculator
-from forecasting_hpi.models.modeling.forecasting_engine import ForecastingEngine
-from forecasting_hpi.models.modeling.model_evaluator import ModelEvaluator
+from models.modeling.model_configuration import ModelConfiguration
+from models.modeling.statistics_calculator import StatisticsCalculator
+from models.modeling.forecasting_engine import ForecastingEngine
+from models.modeling.model_evaluator import ModelEvaluator
 
 
 class ModelPrinter:
@@ -130,7 +130,7 @@ class ModelSerializer:
         :param output_dir: Optional output directory
         :return: Path to saved file
         """
-        from forecasting_hpi.models.paths import paths
+        from models.paths import paths
         
         if filename is None:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -162,7 +162,7 @@ class ModelSerializer:
         :param filename: Optional filename
         :return: Path to saved CSV file
         """
-        from forecasting_hpi.models.paths import paths
+        from models.paths import paths
         
         # Create DataFrame with results
         df = pd.DataFrame({

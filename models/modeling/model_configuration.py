@@ -10,7 +10,7 @@ import json
 from typing import Optional, Dict, Any
 
 # Import path management
-from forecasting_hpi.models.paths import paths
+from models.paths import paths
 
 
 class ModelConfiguration:

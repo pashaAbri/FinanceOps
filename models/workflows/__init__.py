@@ -6,6 +6,6 @@ that combine data loading, preprocessing, modeling, and evaluation
 into complete automated pipelines.
 """
 
-from forecasting_hpi.models.workflows.workflow_1 import HPIForecastingWorkflow
+from models.workflows.workflow_1 import HPIForecastingWorkflow
 
 __all__ = ['HPIForecastingWorkflow']

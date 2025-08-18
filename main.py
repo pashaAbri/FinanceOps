@@ -11,7 +11,7 @@ Usage:
     python main.py quick 2.3 --years 5
     
     Or import as a module:
-    from forecasting_hpi import HPIForecastingWorkflow
+    from models.workflows import HPIForecastingWorkflow
     workflow = HPIForecastingWorkflow()
     results = workflow.run_complete_workflow()
 """
@@ -25,7 +25,7 @@ if str(package_root) not in sys.path:
     sys.path.insert(0, str(package_root))
 
 # Import the main run module
-from forecasting_hpi.models.run import main as run_main
+from models.run import main as run_main
 
 def main():
     """Main entry point that delegates to the models.run module."""

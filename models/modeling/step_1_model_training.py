@@ -10,7 +10,7 @@ import json
 from typing import Dict, List, Optional, Any
 
 # Import modeling components
-from forecasting_hpi.models.modeling.forecast_model import ForecastModel
+from models.modeling.forecast_model import ForecastModel
 
 
 class ModelTrainer:

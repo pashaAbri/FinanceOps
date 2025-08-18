@@ -11,22 +11,22 @@ import numpy as np
 from typing import Dict, Any, Tuple, Optional, List
 
 # Import path management
-from forecasting_hpi.models.paths import paths
+from models.paths import paths
 
 # Import modular components
-from forecasting_hpi.models.modeling.model_configuration import (
+from models.modeling.model_configuration import (
     ModelConfiguration, create_model_configuration
 )
-from forecasting_hpi.models.modeling.statistics_calculator import (
+from models.modeling.statistics_calculator import (
     StatisticsCalculator, create_statistics_calculator
 )
-from forecasting_hpi.models.modeling.forecasting_engine import (
+from models.modeling.forecasting_engine import (
     ForecastingEngine, create_forecasting_engine
 )
-from forecasting_hpi.models.modeling.model_evaluator import (
+from models.modeling.model_evaluator import (
     ModelEvaluator, create_model_evaluator
 )
-from forecasting_hpi.models.modeling.model_utilities import (
+from models.modeling.model_utilities import (
     ModelPrinter, ModelSerializer, ModelValidator, print_statistics
 )
 

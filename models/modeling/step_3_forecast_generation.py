@@ -10,7 +10,7 @@ import numpy as np
 from typing import Dict, Any, List, Optional, Union
 
 # Import modeling components
-from forecasting_hpi.models.modeling.forecast_model import ForecastModel
+from models.modeling.forecast_model import ForecastModel
 
 
 class ForecastGenerator:

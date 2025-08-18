@@ -9,8 +9,8 @@ import pandas as pd
 from typing import Dict, Any, List, Tuple
 
 # Import modeling components
-from forecasting_hpi.models.modeling.forecast_model import ForecastModel
-from forecasting_hpi.models.modeling.model_utilities import ModelPrinter, ModelComparison
+from models.modeling.forecast_model import ForecastModel
+from models.modeling.model_utilities import ModelPrinter, ModelComparison
 
 
 class ModelEvaluationEngine:

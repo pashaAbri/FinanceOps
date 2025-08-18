@@ -9,8 +9,8 @@ import pandas as pd
 import numpy as np
 from typing import Tuple, Dict, Any, Optional, List
 
-from forecasting_hpi.models.modeling.model_configuration import ModelConfiguration
-from forecasting_hpi.models.modeling.statistics_calculator import StatisticsCalculator
+from models.modeling.model_configuration import ModelConfiguration
+from models.modeling.statistics_calculator import StatisticsCalculator
 
 
 class ForecastingEngine:

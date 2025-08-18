@@ -11,7 +11,7 @@ import json
 from typing import Dict, Any, Optional, List
 
 # Import path management
-from forecasting_hpi.models.paths import paths
+from models.paths import paths
 
 # Import modeling step components
 from .step_1_model_training import ModelTrainer, train_forecasting_models

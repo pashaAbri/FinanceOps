@@ -15,11 +15,11 @@ class PathManager:
     """Centralized path management for the HPI forecasting system."""
     
     def __init__(self):
-        # Get the forecasting_hpi package root directory
-        self.package_root = Path(__file__).parent.parent
+        # Get the project root directory (where models directory is located)
+        self.project_root = Path(__file__).parent.parent
         
-        # Get the FinanceOps project root directory  
-        self.project_root = self.package_root.parent
+        # Package root is now the same as project root
+        self.package_root = self.project_root
         
         # Models directory (where this file is located)
         self.models_dir = Path(__file__).parent
@@ -34,7 +34,7 @@ class PathManager:
         # Configuration file
         self.config_file = self.models_dir / "config.json"
         
-        # Project data directory (external to models)
+        # Project data directory (now at project root level)
         self.project_data_dir = self.project_root / "data"
         
         # Initialize sys.path if needed

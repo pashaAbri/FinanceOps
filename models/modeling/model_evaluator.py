@@ -10,8 +10,8 @@ import numpy as np
 from scipy.stats import ttest_rel, ttest_ind
 from typing import Dict, Any, Tuple, List, Optional
 
-from forecasting_hpi.models.modeling.model_configuration import ModelConfiguration
-from forecasting_hpi.models.modeling.forecasting_engine import ForecastingEngine
+from models.modeling.model_configuration import ModelConfiguration
+from models.modeling.forecasting_engine import ForecastingEngine
 
 
 class ModelEvaluator:

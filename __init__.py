@@ -12,17 +12,17 @@ Key Components:
 - Utilities and plotting
 
 Usage:
-    from forecasting_hpi import HPIForecastingWorkflow
-    from forecasting_hpi.models.input_data import DataLoader
-    from forecasting_hpi.models.modeling import ForecastModel
+    from models.workflows import HPIForecastingWorkflow
+    from models.input_data import DataLoader
+    from models.modeling import ForecastModel
 """
 
 import sys
 import os
 from pathlib import Path
 
-# Add the root FinanceOps directory to path for accessing shared modules
-_ROOT_DIR = Path(__file__).parent.parent
+# Add the current directory to path for accessing modules
+_ROOT_DIR = Path(__file__).parent
 if str(_ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(_ROOT_DIR))
 
@@ -31,7 +31,7 @@ __version__ = "1.0.0"
 __author__ = "FinanceOps Team"
 
 # Make key classes available at package level
-from forecasting_hpi.models.workflows.workflow_1 import HPIForecastingWorkflow
+from models.workflows.workflow_1 import HPIForecastingWorkflow
 
 __all__ = [
     'HPIForecastingWorkflow',

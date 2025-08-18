@@ -15,9 +15,9 @@ Structure:
 """
 
 # Make key components available at models package level
-from forecasting_hpi.models.etl import DataLoader, HPIPreprocessor, HPIETLPipeline
-from forecasting_hpi.models.modeling.forecast_model import ForecastModel
-from forecasting_hpi.models.workflows.workflow_1 import HPIForecastingWorkflow
+from models.etl import DataLoader, HPIPreprocessor, HPIETLPipeline
+from models.modeling.forecast_model import ForecastModel
+from models.workflows.workflow_1 import HPIForecastingWorkflow
 
 __all__ = [
     'DataLoader',

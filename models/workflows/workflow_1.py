@@ -9,11 +9,11 @@ import numpy as np
 from typing import Dict, Any, List, Optional
 
 # Import path management
-from forecasting_hpi.models.paths import paths
+from models.paths import paths
 
 # Import modules using the new system
-from forecasting_hpi.models.etl import HPIETLPipeline
-from forecasting_hpi.models.modeling import (
+from models.etl import HPIETLPipeline
+from models.modeling import (
     ForecastModel, print_statistics,
     ModelPrinter, ModelComparison,
     HPIModelingPipeline,
