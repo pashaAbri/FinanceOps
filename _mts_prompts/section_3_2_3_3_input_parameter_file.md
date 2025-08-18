@@ -1,8 +1,8 @@
 # Section 3.2.3.3 – Input/Feature – Parameter File
 
-**Objective:** Using the model workflow documentation, data summaries, parameter statistics, and relationship mappings, describe all model inputs and their data sources for the HPI model. Your explanation should clearly show how these inputs and parameters are used in the modeling process.
+**Objective:** Using the model workflow documentation, data summaries, parameter statistics, and relationship mappings, describe all model inputs and their data sources. Your explanation should clearly show how these inputs and parameters are used in the modeling process.
 
-**Role:** As the Model Development Owner (MDO), you are responsible for detailing the inputs, features, and parameter specifications for the HPI model in the Model Technical Specification (MTS) document.
+**Role:** As the Model Development Owner (MDO), you are responsible for detailing the inputs, features, and parameter specifications for the model in the Model Technical Specification (MTS) document.
 
 **Task:**
 • List and describe all model inputs, including their roles and sources.

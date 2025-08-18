@@ -1,8 +1,8 @@
 # Data Input Documentation
 
-**Objective:** Using the model workflow documentation and input specifications, create comprehensive documentation for all data inputs used in the HPI model. Your explanation should provide detailed technical documentation for each input parameter and data source. For references, look for MTS_DATA_INPUT_DOCUMENTATION keyword.
+**Objective:** Using the model workflow documentation and input specifications, create comprehensive documentation for all data inputs used in the model. Your explanation should provide detailed technical documentation for each input parameter and data source. For references, look for MTS_DATA_INPUT_DOCUMENTATION keyword.
 
-**Role:** As the Model Development Owner (MDO), you are responsible for documenting the detailed specifications and technical requirements for all data inputs in the HPI model for the Model Technical Specification (MTS) document.
+**Role:** As the Model Development Owner (MDO), you are responsible for documenting the detailed specifications and technical requirements for all data inputs in the model for the Model Technical Specification (MTS) document.
 
 **Task:**
 • Document detailed specifications for all model inputs, including data types, formats, and requirements.
