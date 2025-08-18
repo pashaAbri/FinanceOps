@@ -1,6 +1,6 @@
 {
   "data": {
-    "data_dir": "./data/",
+    "data_dir": "forecasting_hpi/data/",
     "files": {
       "hpi": "USA House Price Index.csv",
       "earnings_nominal": "USA Median Weekly Nominal Earnings.csv",

@@ -1,30 +1,15 @@
 ################################################################
 #
-# Python package requirements for FinanceOps:
-# https://github.com/Hvass-Labs/FinanceOps
+# Python package requirements for HPI Forecasting:
+# House Price Index Forecasting Module
 #
-# If you are using Anaconda then you can install all required
-# Python packages by running the following commands in a shell:
-#
-#     conda create --name FinanceOps python=3
-#     source activate FinanceOps
+# Install with:
 #     pip install -r requirements.txt
 #
 ################################################################
 
-numpy       # Array-based computing.
-scipy       # Scientific computing.
-pandas      # Time-series computing.
-matplotlib  # Basic plotting.
-seaborn     # Extra plotting functions.
-scikit-learn # Machine Learning.
-requests    # Download from the internet.
-notebook    # Jupyter Notebook.
-ipywidgets  # Interaction for Jupyter Notebook.
-pygmo       # Multi-objective optimization.
-statsmodels # Statistical modelling.
-simfin      # Financial database.
-numba       # Numba Jit compiler.
-investops   # Investment tools.
+numpy>=1.21.0      # Array-based computing and mathematical operations
+pandas>=1.3.0      # Time-series data manipulation and analysis
+scipy>=1.7.0       # Scientific computing (statistics, t-tests)
 
 ################################################################
