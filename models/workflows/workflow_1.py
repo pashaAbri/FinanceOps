@@ -1,6 +1,102 @@
 """
+# MTS_MODEL_WORKFLOW
 Workflow 1: Complete HPI Forecasting Pipeline
-This workflow orchestrates the entire HPI forecasting process from data loading to model evaluation.
+
+## Overview
+This workflow module implements the complete end-to-end HPI forecasting pipeline, orchestrating
+all components from raw data ingestion through final forecast generation. It serves as the main
+execution engine that coordinates ETL operations, model training, evaluation, and forecast
+generation into a unified, automated workflow for operational house price forecasting.
+
+## Function within the Model Pipeline
+The workflow serves as the master orchestrator that:
+- Coordinates the complete forecasting pipeline from start to finish
+- Manages dependencies between ETL, modeling, and forecasting components
+- Provides unified error handling and logging across all pipeline stages
+- Enables both full pipeline execution and individual step-by-step processing
+- Generates comprehensive reports and summaries of all results
+- Facilitates operational deployment and automated forecasting schedules
+
+## Inputs
+- **config_path**: Path to JSON configuration file containing system parameters
+  - Data file specifications and economic indicator mappings
+  - Model hyperparameters and forecasting horizons
+  - Pipeline execution settings and validation thresholds
+- **years**: Optional forecast horizon override for data preprocessing
+- **current_ratio**: Optional current valuation ratio for forecast generation
+- **years_list**: Optional list of specific forecast horizons to process
+
+## Outputs
+- **complete_results**: Comprehensive results dictionary containing:
+  - **etl_results**: Raw and processed data with validation metrics
+  - **modeling_results**: Trained models, evaluation metrics, and performance analysis
+  - **raw_data**: Original economic time series data from all sources
+  - **processed_data**: Feature-engineered DataFrame ready for modeling
+  - **models**: Dictionary of trained ForecastModel instances across all configurations
+  - **evaluation_results**: Performance metrics and statistical validation results
+  - **forecasts**: Point estimates and uncertainty intervals for all model variants
+- **summary_reports**: Formatted output tables and diagnostic summaries
+- **operational_forecasts**: Structured JSON outputs for system integration
+
+## Mathematical Formulation
+The workflow implements a complete econometric forecasting system with the following structure:
+
+### Pipeline Architecture:
+```
+Raw Data → ETL → Modeling → Evaluation → Forecasting → Output
+```
+
+### ETL Mathematical Operations:
+1. **Data Alignment**: Temporal synchronization of economic indicators
+2. **Feature Engineering**: 
+   ```
+   ratio_t = HPI_t / Earnings_t
+   real_hpi_t = HPI_t / CPI_t
+   mortgage_factor_t = f(rate_t, years, income_t)
+   ```
+3. **Annualized Return Calculation**:
+   ```
+   R_annual = (HPI_t / HPI_{t-n})^(1/n) - 1
+   ```
+
+### Modeling Mathematical Framework:
+The workflow applies mean reversion theory across multiple model variants:
+
+**Core Forecasting Equation**:
+```
+E[R_{t+n}] = (1/n) * ln(μ_ratio / ratio_t) + μ_growth
+σ[R_{t+n}] = √(σ_baseline² + σ_earnings²)
+```
+
+**Model Variants Applied**:
+1. **Baseline**: Standard HPI/earnings ratio with nominal returns
+2. **Mortgage Factor**: Affordability-adjusted ratios
+3. **Real Returns**: Inflation-adjusted calculations
+4. **Combined**: Both mortgage and real return adjustments
+
+### Evaluation Metrics Framework:
+```
+MAE = (1/n) * Σ|y_actual - y_forecast|
+R² = 1 - (SS_res / SS_tot)
+Correlation = ρ(y_actual, y_forecast)
+```
+
+### Forecast Generation:
+**Point Forecasts**: Applied across 3-10 year horizons
+**Confidence Intervals**: 
+```
+CI_α = E[R_{t+n}] ± z_{α/2} * σ[R_{t+n}]
+```
+
+### Workflow Optimization:
+- **Parallel Processing**: Multiple model configurations trained simultaneously
+- **Memory Management**: Efficient data handling for large time series
+- **Error Recovery**: Robust exception handling with detailed diagnostics
+- **Performance Monitoring**: Execution timing and resource utilization tracking
+
+The workflow provides a production-ready system for automated house price forecasting,
+combining rigorous econometric methodology with robust software engineering practices
+for reliable operational deployment.
 """
 
 import json
