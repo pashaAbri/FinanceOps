@@ -57,23 +57,26 @@ class DataLoader:
         
         return data
     
+    def _resample_daily(self, data: pd.Series) -> pd.Series:
+        """Resample data using linear interpolation to get daily values."""
+        return data.resample('D').interpolate(method='linear')
+    
     def load_cpi(self) -> pd.Series:
-        """Load Consumer Price Index from external module."""
-        # Import from the main data module at project root
-        import sys
-        import os
-        import importlib.util
+        """Load Consumer Price Index data from local CSV file."""
+        # Path for the data-file.
+        path = os.path.join(self.data_dir, self.files['cpi'])
         
-        # Get the path to the main data.py file
-        project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
-        data_file_path = os.path.join(project_root, 'data.py')
+        # Load the data - CPI file has different format
+        data = pd.read_csv(path, sep=",", parse_dates=[3], index_col=3)
         
-        # Load the data module from the specific file
-        spec = importlib.util.spec_from_file_location("main_data", data_file_path)
-        main_data = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(main_data)
+        # Rename the index- and data-columns.
+        data.index.name = "Date"
+        data.rename(columns={"Value": self.variables['CPI']}, inplace=True)
         
-        return main_data.load_usa_cpi()
+        # Resample by linear interpolation to get daily values.
+        data_daily = self._resample_daily(data[self.variables['CPI']])
+        
+        return data_daily
     
     def load_hpi(self) -> pd.Series:
         """Load House Price Index data."""
@@ -98,19 +101,6 @@ class DataLoader:
     
     def load_mortgage_rate(self) -> pd.Series:
         """Load 30-year mortgage rate data."""
-        # Import from the main data module at project root
-        import os
-        import importlib.util
-        
-        # Get the path to the main data.py file
-        project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
-        data_file_path = os.path.join(project_root, 'data.py')
-        
-        # Load the data module from the specific file
-        spec = importlib.util.spec_from_file_location("main_data", data_file_path)
-        main_data = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(main_data)
-        
         data = self._load_data(
             filename=self.files['mortgage_rate'],
             new_name=self.variables['MORTGAGE_RATE']
@@ -118,7 +108,7 @@ class DataLoader:
         # Convert percentage to decimal
         data /= 100.0
         # Resample to daily data
-        data = main_data._resample_daily(data)
+        data = self._resample_daily(data)
         return data
     
     def load_all_data(self) -> Dict[str, pd.Series]:
