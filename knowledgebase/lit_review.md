@@ -1,3 +1,4 @@
+# MTS_LITREVIEW
 The synthesis of financial academic works presents a comprehensive exploration of financial modeling techniques and their applications in economic forecasting and housing market analysis. A common theme across these studies is the use of sophisticated statistical models to capture complex economic dynamics and improve prediction accuracy.
 
 Shar and Hamori (2004) delve into the application of Hidden Markov Models (HMMs) in financial economics, emphasizing their utility in modeling stochastic processes and capturing regime shifts in economic data. Their work highlights the effectiveness of HMMs in analyzing volatility of GDP growth rates and co-movements among stock markets, showcasing the models' capability to detect structural breaks and regime shifts. This approach is mirrored in the work of Tian and Shen (2019), who apply Markovian models to predict U.S. recessions. They extend the framework to incorporate temporal models in economic indicators to enhance forecasting accuracy.
@@ -14,10 +15,24 @@ In conclusion, the synthesis of these papers highlights the evolution of financi
 
 ### References
 
-- Shar, R., & Hamori, S. (2004). Hidden Markov Models: Applications to Financial Economics. Springer Science + Business Media, Inc.
+1. **Aziz, S., Dowling, M., Hammami, H., & Piepenbrink, A. (2022).** Machine Learning in Finance: A Topic Modeling Approach. *European Financial Management*, 28(3), 744-770. doi:10.1111/eufm.12326
 
-The book "Hidden Markov Models: Applications to Financial Economics" by Ramaprasad Shar and Shigeyuki Hamori explores the application of Hidden Markov Models (HMMs) in the context of financial economics. It provides a comprehensive understanding of how HMMs can be utilized to model various financial phenomena, generating new stochastic nature of economic and financial variables.
+2. **Kelly, B. T., & Xiu, D. (2023).** Financial Machine Learning. *National Bureau of Economic Research Working Paper* No. 31502. Retrieved from https://www.nber.org/papers/w31502
 
-The authors begin by introducing the basic properties of Markov chains and the algorithmic structures used to estimate these models. They emphasize the distinction between HMMs and other modeling approaches, such as regime-switching models, and highlight their unique capabilities in using latent states to model complex financial relationships.
+3. **Ozbayoglu, A. M., Gudelek, M. U., & Sezer, O. B. (2020).** Deep Learning for Financial Applications: A Survey. *Applied Soft Computing*, 93, 106384. doi:10.1016/j.asoc.2020.106384
 
-The book delves into several applications of HMMs across different financial topics. It discusses the volatility in GDP growth rates, demonstrating the effectiveness and regime shifts in economic data. The authors also explore the linkages among G7 stock markets, utilizing Markov switching models to analyze co-movements and volatility patterns in international financial markets.
+4. **Wasserbacher, H., & Spindler, M. (2021).** Machine Learning for Financial Forecasting, Planning and Analysis: Recent Developments and Pitfalls. *Digital Finance*, 3, 197-213. doi:10.1007/s42521-021-00046-2
+
+5. **Cao, L. (2021).** AI in Finance: Challenges, Techniques and Opportunities. *ACM Computing Surveys*, 55(3), 1-38. doi:10.1145/3502289
+
+### Reference Summaries
+
+**Machine Learning in Finance: A Topic Modeling Approach** by Aziz et al. (2022) employs topic modeling techniques to analyze the landscape of machine learning applications in finance. The study identifies key research areas including bankruptcy prediction, stock price forecasting, and portfolio management, providing insights into emerging trends and methodological developments in financial machine learning.
+
+**Financial Machine Learning** by Kelly and Xiu (2023) provides a comprehensive survey of the emerging literature on machine learning applications in financial markets. The authors discuss the advantages and limitations of various machine learning techniques in financial contexts, highlighting exemplary research and recommending promising directions for future studies in quantitative finance.
+
+**Deep Learning for Financial Applications** by Ozbayoglu et al. (2020) offers a systematic survey of deep learning models applied across various financial domains. The study categorizes applications based on their financial contexts and analyzes model performances, providing valuable insights for researchers and practitioners implementing deep learning solutions in financial operations.
+
+**Machine Learning for Financial Forecasting** by Wasserbacher and Spindler (2021) introduces advanced machine learning techniques specifically for financial forecasting, planning, and analysis. The authors discuss recent methodological developments while addressing potential pitfalls and practical considerations for implementation in real-world financial systems.
+
+**AI in Finance: Challenges, Techniques and Opportunities** by Cao (2021) provides a comprehensive overview of artificial intelligence applications in finance, discussing data-driven analytics and learning methodologies. The paper addresses key challenges in implementing AI solutions while identifying opportunities for innovation in financial business operations.

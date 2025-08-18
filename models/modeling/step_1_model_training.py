@@ -1,8 +1,64 @@
 """
+# MTS_MODEL_STEP_1
 Step 1: Model Training Module
 
-This module handles the training of forecasting models for different time horizons
-and configurations in the HPI forecasting pipeline.
+## Overview
+This module implements the first step of the HPI forecasting pipeline, responsible for training
+econometric models that predict house price returns based on valuation ratios and economic indicators.
+The training process creates multiple model variants across different time horizons and configurations
+to capture various market scenarios and modeling assumptions.
+
+## Function within the Model Pipeline
+Step 1 serves as the foundation of the modeling pipeline by:
+- Training forecasting models for multiple time horizons (3-10 years)
+- Creating model variants with different economic assumptions (nominal vs real returns)
+- Incorporating mortgage affordability factors when applicable
+- Establishing baseline model parameters for subsequent evaluation and forecasting
+
+## Inputs
+- **processed_data**: Preprocessed DataFrame containing economic time series data
+  - House Price Index (HPI) values
+  - Consumer Price Index (CPI) for inflation adjustment
+  - Nominal and real earnings data
+  - Mortgage rates and derived affordability metrics
+- **preprocessor**: HPIPreprocessor instance for feature engineering and data preparation
+- **config_path**: Path to JSON configuration file containing model parameters
+- **years_list**: Optional list of forecast horizons in years (default: [3,4,5,6,7,8,9,10])
+
+## Outputs
+- **models**: Dictionary of trained ForecastModel instances indexed by configuration keys
+  - Model keys format: "{years}y_mf{mortgage_factor}_real{real_returns}"
+  - Each model contains trained parameters and statistical relationships
+- **model_summary**: Training summary with model counts and configuration details
+
+## Mathematical Formulation
+The training process implements mean reversion models based on valuation theory:
+
+### Core Model Structure:
+```
+E[R_t+n] = (1/n) * ln(μ_ratio / ratio_t) + μ_growth
+```
+
+Where:
+- `R_t+n`: Expected annualized return over n years
+- `ratio_t`: Current house price-to-earnings ratio
+- `μ_ratio`: Long-term mean valuation ratio
+- `μ_growth`: Mean earnings growth rate
+- `n`: Forecast horizon in years
+
+### Model Variants:
+1. **Baseline Model**: Uses nominal returns and standard HPI/earnings ratio
+2. **Mortgage Factor Model**: Incorporates mortgage affordability adjustments
+3. **Real Returns Model**: Uses inflation-adjusted returns and real earnings growth
+4. **Combined Model**: Applies both mortgage factors and real return calculations
+
+### Statistical Estimation:
+- Mean reversion parameters estimated from historical data
+- Volatility parameters calculated from residual analysis
+- Cross-validation ensures model stability across different time periods
+
+The training module optimizes these parameters for each model configuration and time horizon,
+creating a comprehensive set of forecasting models ready for evaluation and deployment.
 """
 
 import pandas as pd

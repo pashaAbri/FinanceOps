@@ -1,8 +1,86 @@
 """
+# MTS_MODEL_STEP_3
 Step 3: Forecast Generation Module
 
-This module handles the generation of forecasts using trained models
-in the HPI forecasting pipeline.
+## Overview
+This module implements the final step of the HPI forecasting pipeline, responsible for generating
+operational house price return forecasts using validated models from previous steps. The forecast
+generation process produces point estimates, uncertainty intervals, and confidence bounds for
+multiple time horizons, enabling comprehensive risk assessment and decision support.
+
+## Function within the Model Pipeline
+Step 3 serves as the operational output stage of the modeling pipeline by:
+- Generating point forecasts for house price returns across multiple time horizons
+- Producing uncertainty estimates and confidence intervals for risk assessment
+- Applying current market conditions to validated forecasting models
+- Creating structured output formats for downstream consumption
+- Enabling scenario analysis and stress testing capabilities
+
+## Inputs
+- **models**: Dictionary of validated ForecastModel instances from Steps 1 and 2
+  - Only models that passed evaluation criteria are used for operational forecasting
+  - Models span multiple time horizons (3-10 years) and configuration variants
+- **current_ratio**: Latest house price-to-earnings valuation ratio
+  - Extracted from most recent processed economic data
+  - Used as the starting point for all forecast calculations
+- **processed_data**: Current economic indicators and market conditions
+  - Latest HPI, earnings, and mortgage rate data
+  - Used for ratio extraction when current_ratio not provided
+
+## Outputs
+- **forecasts**: Comprehensive forecast results for each model and time horizon
+  - Point estimates for expected annualized returns
+  - Standard deviation estimates for return volatility
+  - Model-specific forecast confidence and reliability metrics
+- **confidence_intervals**: Statistical confidence bounds at multiple levels (68%, 95%)
+- **scenario_analysis**: Forecasts under different economic assumptions and market conditions
+- **structured_output**: JSON-formatted results for system integration and reporting
+
+## Mathematical Formulation
+The forecast generation process applies mean reversion theory with uncertainty quantification:
+
+### Core Forecasting Model:
+```
+E[R_t+n] = (1/n) * ln(μ_ratio / ratio_t) + μ_growth
+```
+
+Where:
+- `E[R_t+n]`: Expected annualized return over n years
+- `ratio_t`: Current house price-to-earnings ratio (input)
+- `μ_ratio`: Long-term mean valuation ratio (from training)
+- `μ_growth`: Mean earnings growth rate (from training)
+- `n`: Forecast horizon in years
+
+### Uncertainty Estimation:
+```
+σ[R_t+n] = √(σ_baseline² + σ_earnings²)
+```
+
+Where:
+- `σ_baseline`: Baseline return volatility from historical analysis
+- `σ_earnings`: Earnings growth uncertainty component
+
+### Confidence Intervals:
+For confidence level α, the forecast interval is:
+```
+CI_α = E[R_t+n] ± z_α/2 * σ[R_t+n]
+```
+
+Where `z_α/2` is the critical value from the standard normal distribution.
+
+### Model Variants:
+1. **Nominal Returns Model**: Standard forecasting using nominal economic indicators
+2. **Real Returns Model**: Inflation-adjusted forecasting for real return estimates
+3. **Mortgage Factor Model**: Incorporates affordability constraints in valuation ratios
+4. **Combined Model**: Applies both real return and mortgage factor adjustments
+
+### Risk Metrics:
+- **Value at Risk (VaR)**: Downside risk quantification at specified confidence levels
+- **Expected Shortfall**: Average loss beyond VaR threshold
+- **Probability of Negative Returns**: Likelihood of house price declines
+
+The forecast generation module provides comprehensive forward-looking analysis enabling
+informed decision-making for housing market participants, investors, and policymakers.
 """
 
 import pandas as pd

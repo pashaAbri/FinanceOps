@@ -1,8 +1,88 @@
 """
+# MTS_MODEL_STEP_2
 Step 2: Model Evaluation Module
 
-This module handles the evaluation and performance assessment of trained
-forecasting models in the HPI forecasting pipeline.
+## Overview
+This module implements the second step of the HPI forecasting pipeline, responsible for comprehensive
+performance assessment and validation of trained forecasting models. The evaluation process employs
+multiple statistical metrics and diagnostic tests to assess model accuracy, reliability, and statistical
+significance across different market conditions and time periods.
+
+## Function within the Model Pipeline
+Step 2 serves as the quality assurance gate in the modeling pipeline by:
+- Evaluating forecast accuracy using multiple performance metrics
+- Conducting statistical significance tests on model predictions
+- Ranking models based on out-of-sample performance
+- Identifying the best-performing models for operational deployment
+- Providing diagnostic insights for model selection and improvement
+
+## Inputs
+- **models**: Dictionary of trained ForecastModel instances from Step 1
+  - Each model contains fitted parameters and historical relationships
+  - Models span multiple time horizons and configuration variants
+- **evaluation_data**: Historical data for out-of-sample testing
+  - Valuation ratios and corresponding realized returns
+  - Economic indicators for model validation
+
+## Outputs
+- **evaluation_results**: Comprehensive performance metrics for each model
+  - Accuracy metrics (MAE, RMSE, R-squared, MAPE)
+  - Statistical significance tests (t-tests, correlation analysis)
+  - Model rankings and comparative performance analysis
+- **best_model_identification**: Selection of optimal models by horizon and configuration
+- **diagnostic_reports**: Detailed performance analysis and model validation results
+
+## Mathematical Formulation
+The evaluation process employs multiple statistical measures to assess forecast quality:
+
+### Accuracy Metrics:
+1. **Mean Absolute Error (MAE)**:
+   ```
+   MAE = (1/n) * Σ|y_actual - y_forecast|
+   ```
+
+2. **Root Mean Square Error (RMSE)**:
+   ```
+   RMSE = √[(1/n) * Σ(y_actual - y_forecast)²]
+   ```
+
+3. **R-squared (Coefficient of Determination)**:
+   ```
+   R² = 1 - (SS_res / SS_tot)
+   where SS_res = Σ(y_actual - y_forecast)²
+         SS_tot = Σ(y_actual - ȳ_actual)²
+   ```
+
+4. **Mean Absolute Percentage Error (MAPE)**:
+   ```
+   MAPE = (100/n) * Σ|((y_actual - y_forecast) / y_actual)|
+   ```
+
+### Statistical Tests:
+1. **Directional Accuracy**:
+   ```
+   DA = (1/n) * Σ[sign(y_actual) = sign(y_forecast)]
+   ```
+
+2. **Correlation Coefficient**:
+   ```
+   ρ = Cov(y_actual, y_forecast) / (σ_actual * σ_forecast)
+   ```
+
+3. **T-test for Forecast Bias**:
+   ```
+   t = (μ_error - 0) / (σ_error / √n)
+   ```
+
+### Model Ranking:
+Models are ranked using a composite scoring system that weighs:
+- Forecast accuracy (R², MAE)
+- Statistical significance (p-values, confidence intervals)
+- Stability across different market regimes
+- Consistency across multiple time horizons
+
+The evaluation module provides comprehensive model validation ensuring only statistically
+significant and practically useful models proceed to operational forecast generation.
 """
 
 import pandas as pd
