@@ -11,5 +11,5 @@
 • Provide a detailed summary focusing on the model's workflow, methodology, and technical processes.
 • Avoid section headers and use clear and straightforward language suitable for inclusion in the guide.
 • Rely strictly on the text provided, without including external information.
-• Use the MDG and other relevant documentation as references.
+• Use other relevant documentation as references.
 • Knowledge base keywords are included in .py and .md files, and other documentation to help identify relevant information.

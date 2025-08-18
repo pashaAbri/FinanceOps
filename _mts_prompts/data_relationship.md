@@ -13,5 +13,5 @@
 • Clearly explain the relationships between data elements and how they interact in the modeling process.
 • Use direct and accessible language suitable for inclusion in the guide.
 • Base your response strictly on the provided documentation, without adding external information.
-• Use the MDG and other relevant documentation as references.
+• Use other relevant documentation as references.
 • Knowledge base keywords are included in .py and .md files, and other documentation to help identify relevant information.
