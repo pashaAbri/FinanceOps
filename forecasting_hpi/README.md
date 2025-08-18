@@ -53,24 +53,39 @@ forecasting_hpi/
 ### Prerequisites
 
 - Python 3.8+
-- Access to FinanceOps data directory (../../data/)
+- Data files located in `forecasting_hpi/data/` directory (USA CPI, HPI, earnings, mortgage rates)
 - Required packages (pandas, numpy, scipy)
+- Must run commands from the **FinanceOps project root directory**
 
 ### Basic Usage
 
-Navigate to the models directory and run:
+**IMPORTANT**: All commands must be run from the **FinanceOps project root directory** (not from within the forecasting_hpi directory). This is required for proper Python module imports.
 
 ```bash
-cd models
+# From the FinanceOps project root directory:
+cd /path/to/FinanceOps
 
 # Run complete forecasting workflow
-python run.py workflow
+python -m forecasting_hpi.main workflow
 
 # Quick forecast for current market conditions
-python run.py quick 0.45 --years 5
+python -m forecasting_hpi.main quick 0.45 --years 5
 
 # Custom workflow with specific parameters
-python run.py workflow --years 7 --ratio 0.48
+python -m forecasting_hpi.main workflow --years 7 --ratio 0.48
+```
+
+**Alternative method** using the main.py entry point directly:
+
+```bash
+# From the FinanceOps project root directory:
+cd /path/to/FinanceOps
+
+# Run complete forecasting workflow
+python forecasting_hpi/main.py workflow
+
+# Quick forecast for current market conditions
+python forecasting_hpi/main.py quick 0.45 --years 5
 ```
 
 ### Command-Line Interface
@@ -79,7 +94,8 @@ The system provides two main commands:
 
 #### 1. Complete Workflow
 ```bash
-python run.py workflow [options]
+# Run from FinanceOps project root directory
+python -m forecasting_hpi.main workflow [options]
 
 Options:
   --years YEARS     Forecast time horizon (default: from config)
@@ -89,7 +105,8 @@ Options:
 
 #### 2. Quick Forecast
 ```bash
-python run.py quick RATIO [options]
+# Run from FinanceOps project root directory
+python -m forecasting_hpi.main quick RATIO [options]
 
 Arguments:
   RATIO            Current HPI/Earnings valuation ratio
@@ -101,7 +118,8 @@ Options:
 ### Example Outputs
 
 ```bash
-$ python run.py quick 0.45 --years 5
+# Run from FinanceOps project root directory
+$ python -m forecasting_hpi.main quick 0.45 --years 5
 
 HPI FORECASTING WORKFLOW
 ========================================
@@ -461,6 +479,8 @@ To use different data sources, modify `config.json`:
 
 The system can be imported and used programmatically:
 
+**Note**: When using programmatically, ensure your Python script is run from the FinanceOps project root directory or that the FinanceOps directory is in your Python path.
+
 ```python
 # Using the new import system
 from forecasting_hpi.models.run import run_quick_forecast, run_forecasting_workflow
@@ -499,13 +519,25 @@ Results are automatically saved to `models/output/` with timestamps:
 
 ### Common Issues
 
-1. **Import Errors**: 
-   - Ensure you're running from the FinanceOps project root directory
+1. **Wrong Working Directory** (Most Common): 
+   - **CRITICAL**: Commands must be run from the **FinanceOps project root directory**, NOT from within the `forecasting_hpi` directory
+   - If you get `ModuleNotFoundError: No module named 'forecasting_hpi'`, you're in the wrong directory
+   - Correct: `cd /path/to/FinanceOps && python -m forecasting_hpi.main workflow`
+   - Wrong: `cd forecasting_hpi && python main.py workflow`
+
+2. **Data Path Configuration**: 
+   - If you get `No such file or directory: '../data/USA CPI.csv'`, check the `data_dir` setting in `models/config.json`
+   - Should be `"data_dir": "./data/"` to use the local data directory within forecasting_hpi
+   - The data files should be in `forecasting_hpi/data/` directory
+
+3. **Import Errors**: 
+   - Ensure you're running from the FinanceOps project root directory (see issue #1)
    - Verify all `__init__.py` files are present
-   - Use the new import patterns: `from forecasting_hpi import HPIForecastingWorkflow`
-2. **Data Not Found**: Verify `../../data/` path contains required CSV files
-3. **Configuration Errors**: Check `config.json` syntax and file paths
-4. **Path Issues**: Use the centralized path management: `from forecasting_hpi.models.paths import paths`
+   - Use the correct command format: `python -m forecasting_hpi.main workflow`
+
+4. **Configuration Errors**: Check `config.json` syntax and file paths
+
+5. **Path Issues**: Use the centralized path management: `from forecasting_hpi.models.paths import paths`
 
 ### Dependencies
 
