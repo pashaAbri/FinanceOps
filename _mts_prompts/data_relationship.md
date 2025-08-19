@@ -15,3 +15,29 @@
 • Base your response strictly on the provided documentation, without adding external information.
 • Use other relevant documentation as references.
 • Knowledge base keywords are included in .py and .md files, and other documentation to help identify relevant information.
+
+## Expected Output Format
+
+The output should be in JSON format with the following structure requirements:
+
+1. **upstream**: Models or data sources that feed into this model, including their names and explanations of how they are used
+2. **downstream**: Models or processes that consume outputs from this model, including their names and explanations of how they use the outputs
+
+**Important Note:** If you do not know the information for any field, leave the value of that key as an empty string ("").
+
+```json
+{
+  "upstream": [
+    {
+      "name": "string",
+      "explanation": "string"
+    }
+  ],
+  "downstream": [
+    {
+      "name": "string",
+      "explanation": "string"
+    }
+  ]
+}
+```
