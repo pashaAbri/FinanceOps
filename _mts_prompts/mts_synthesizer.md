@@ -1,6 +1,6 @@
 # MTS Synthesizer - Complete Document Generator
 
-**Objective:** Orchestrate the use of modular MTS prompts to generate a comprehensive Model Technical Specification (MTS) document. This synthesizer coordinates multiple specialized prompts to create cohesive, well-structured MTS sections that meet Freddie Mac documentation standards.
+**Objective:** Orchestrate the use of modular MTS prompts to generate a comprehensive Model Technical Specification (MTS) document. This synthesizer coordinates multiple specialized prompts to create cohesive, well-structured MTS sections.
 
 **Role:** As a Model Development Owner (MDO), you are responsible for synthesizing information from multiple sources and specialized prompts to create complete MTS sections that provide comprehensive model documentation.
 
@@ -46,7 +46,6 @@
 • Maintain proper MTS document structure with appropriate headers and organization.
 • Cross-reference information between sections to ensure coherence and avoid redundancy.
 • Use clear, professional language suitable for technical documentation standards.
-• Ensure all synthesized content adheres to Freddie Mac MTS formatting and content requirements.
 • Validate that each section provides complete coverage of its designated topic area.
 
 **Output Format:**
