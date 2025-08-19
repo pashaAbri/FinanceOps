@@ -1,8 +1,76 @@
 """
 Forecasting Engine Module
 
-This module contains the core forecasting logic for predicting HPI returns
-based on valuation ratios and economic indicators.
+## Overview
+This module contains the core forecasting logic for predicting HPI returns based on
+valuation ratios and economic indicators. The ForecastingEngine implements the
+mathematical models that translate current market conditions into forward-looking
+return predictions using mean reversion theory and statistical relationships.
+
+## Function within the Model Pipeline
+The ForecastingEngine serves as the mathematical computation core by:
+- Implementing mean reversion models for return prediction
+- Applying valuation-based forecasting algorithms
+- Generating both point estimates and uncertainty measures
+- Supporting multiple model variants (nominal/real returns, mortgage factors)
+- Providing batch forecasting capabilities for efficient computation
+
+## Inputs
+- **config**: ModelConfiguration instance containing:
+  - Model parameters and column mappings
+  - Forecast horizon and configuration flags
+  - Data structure definitions
+- **statistics**: StatisticsCalculator instance providing:
+  - Mean valuation ratios from historical analysis
+  - Mean earnings growth rates
+  - Volatility parameters and uncertainty measures
+  - Statistical relationships between variables
+
+## Outputs
+- **forecast_single()**: Single-point forecast returning:
+  - Mean expected annualized return
+  - Standard deviation of return estimate
+- **forecast_batch()**: Batch forecasting returning:
+  - Arrays of mean returns for multiple ratio inputs
+  - Arrays of standard deviations for uncertainty quantification
+- **Forecasting parameters**: Statistical parameters used in calculations
+
+## Mathematical Formulation
+The ForecastingEngine implements econometric models based on mean reversion theory:
+
+### Core Forecasting Model:
+```
+E[R_t+n] = (1/n) * ln(μ_ratio / ratio_t) + μ_growth
+```
+
+Where:
+- `E[R_t+n]`: Expected annualized return over n years
+- `ratio_t`: Current house price-to-earnings ratio (input)
+- `μ_ratio`: Long-term mean valuation ratio (from statistics)
+- `μ_growth`: Mean earnings growth rate (from statistics)
+- `n`: Forecast horizon in years
+
+### Uncertainty Estimation:
+```
+σ[R_t+n] = √(σ_baseline² + σ_earnings²)
+```
+
+Where:
+- `σ_baseline`: Baseline return volatility from historical analysis
+- `σ_earnings`: Earnings growth uncertainty component
+
+### Model Variants:
+1. **Baseline Model**: Standard ratio-based forecasting
+2. **Mortgage Factor Model**: Incorporates affordability constraints
+3. **Real Returns Model**: Uses inflation-adjusted calculations
+4. **Combined Model**: Applies both mortgage and real return adjustments
+
+### Batch Processing:
+The engine supports vectorized operations for efficient computation across
+multiple scenarios, time periods, or sensitivity analyses.
+
+The ForecastingEngine provides the mathematical foundation for all prediction
+capabilities within the HPI forecasting system.
 """
 
 import pandas as pd

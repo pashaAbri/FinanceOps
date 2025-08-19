@@ -1,9 +1,92 @@
 """
 Modeling Pipeline Module for HPI Forecasting
 
-This module provides a complete modeling pipeline that orchestrates
-the training, evaluation, and forecast generation steps into a single,
-coherent workflow.
+## Overview
+This module provides a complete modeling pipeline that orchestrates the training,
+evaluation, and forecast generation steps into a single, coherent workflow.
+The HPIModelingPipeline serves as the high-level coordinator that manages the
+entire modeling process from data input through final forecast delivery,
+ensuring consistent execution and comprehensive result generation.
+
+## Function within the Model Pipeline
+The HPIModelingPipeline serves as the master orchestrator by:
+- Coordinating the execution of all three modeling steps (training, evaluation, forecasting)
+- Managing data flow between pipeline stages
+- Providing unified configuration management across all components
+- Ensuring consistent model selection and deployment procedures
+- Delivering comprehensive results with integrated reporting capabilities
+
+## Inputs
+- **processed_data**: Preprocessed DataFrame containing complete economic time series
+  - House Price Index (HPI) values with calculated annualized returns
+  - Consumer Price Index (CPI) for inflation adjustments
+  - Nominal and real earnings data with growth calculations
+  - Mortgage rates and derived affordability metrics
+- **preprocessor**: HPIPreprocessor instance for data preparation operations
+- **config_path**: Path to JSON configuration file containing pipeline parameters
+- **years_list**: Optional list of forecast horizons in years (default from config)
+- **current_ratio**: Optional current valuation ratio for forecasting
+
+## Outputs
+- **Pipeline Results**: Comprehensive modeling outputs including:
+  - Dictionary of trained models from Step 1 (training)
+  - Performance evaluation results from Step 2 (evaluation)
+  - Forecast predictions from Step 3 (generation)
+  - Integrated summary reports and model recommendations
+- **Model Selection**: Best-performing model identification and ranking
+- **Forecast Delivery**: Operational forecasts with confidence intervals
+- **Performance Reports**: Detailed analysis of model quality and reliability
+
+## Mathematical Formulation
+The pipeline coordinates the mathematical workflow across all modeling steps:
+
+### Step 1 - Model Training:
+For each horizon n and configuration variant:
+```
+Model_n = train(data, config) → {μ_ratio, μ_growth, σ_baseline}
+```
+
+### Step 2 - Model Evaluation:
+For each trained model:
+```
+Performance = evaluate(Model_n, test_data) → {MAE, R², correlation}
+```
+
+### Step 3 - Forecast Generation:
+Using best-performing models:
+```
+Forecast = predict(Model_best, current_ratio) → {E[R_t+n], σ[R_t+n]}
+```
+
+### Pipeline Integration:
+The complete workflow implements:
+```
+Results = Pipeline(data) → {
+    models: {model_key: ForecastModel},
+    evaluation: {model_key: performance_metrics},
+    forecasts: {model_key: {mean_return, std_return}},
+    best_model: model_key,
+    summary: integrated_analysis
+}
+```
+
+### Quality Assurance:
+The pipeline ensures model quality through:
+- Cross-validation across multiple time horizons
+- Statistical significance testing at each step
+- Comparative analysis for model selection
+- Comprehensive diagnostic reporting
+
+### Workflow Orchestration:
+1. **Initialization**: Load configuration and validate inputs
+2. **Training Phase**: Create models for all horizon/variant combinations
+3. **Evaluation Phase**: Assess performance using multiple metrics
+4. **Selection Phase**: Identify best-performing models
+5. **Forecasting Phase**: Generate operational predictions
+6. **Reporting Phase**: Deliver integrated results and recommendations
+
+The HPIModelingPipeline provides a complete, production-ready modeling
+solution that delivers reliable forecasts with comprehensive quality assurance.
 """
 
 import pandas as pd

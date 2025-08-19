@@ -1,8 +1,96 @@
 """
 Model Evaluator Module
 
-This module handles performance evaluation and validation of forecasting models,
-including metrics calculation, statistical testing, and model comparison.
+## Overview
+This module handles comprehensive performance evaluation and validation of forecasting
+models, including metrics calculation, statistical testing, and model comparison.
+The ModelEvaluator provides rigorous assessment capabilities to ensure model quality,
+reliability, and statistical significance before deployment in operational forecasting.
+
+## Function within the Model Pipeline
+The ModelEvaluator serves as the quality assurance component by:
+- Calculating multiple performance metrics for comprehensive model assessment
+- Conducting statistical significance tests on forecasting accuracy
+- Performing comparative analysis between different model variants
+- Validating model assumptions and statistical properties
+- Providing diagnostic insights for model improvement and selection
+
+## Inputs
+- **config**: ModelConfiguration instance providing:
+  - Model parameters and data structure definitions
+  - Column mappings and variable specifications
+  - Model variant settings and configuration flags
+- **engine**: ForecastingEngine instance containing:
+  - Trained forecasting algorithms and parameters
+  - Statistical relationships and model coefficients
+  - Forecasting capabilities for evaluation testing
+
+## Outputs
+- **Performance Metrics**: Comprehensive accuracy measurements including:
+  - Mean Absolute Error (MAE) for forecast accuracy
+  - Root Mean Square Error (RMSE) for error magnitude assessment
+  - R-squared values for explanatory power evaluation
+  - Mean Absolute Percentage Error (MAPE) for relative accuracy
+- **Statistical Tests**: Significance and validation results including:
+  - Correlation coefficients and significance tests
+  - Directional accuracy measurements
+  - Forecast bias tests and confidence intervals
+- **Comparative Analysis**: Model ranking and selection metrics
+
+## Mathematical Formulation
+The ModelEvaluator implements multiple statistical measures for comprehensive assessment:
+
+### Accuracy Metrics:
+
+1. **Mean Absolute Error (MAE)**:
+   ```
+   MAE = (1/n) * Σ|y_actual - y_forecast|
+   ```
+
+2. **Root Mean Square Error (RMSE)**:
+   ```
+   RMSE = √[(1/n) * Σ(y_actual - y_forecast)²]
+   ```
+
+3. **R-squared (Coefficient of Determination)**:
+   ```
+   R² = 1 - (SS_res / SS_tot)
+   where SS_res = Σ(y_actual - y_forecast)²
+         SS_tot = Σ(y_actual - ȳ_actual)²
+   ```
+
+4. **Mean Absolute Percentage Error (MAPE)**:
+   ```
+   MAPE = (100/n) * Σ|((y_actual - y_forecast) / y_actual)|
+   ```
+
+### Statistical Significance Tests:
+
+1. **Correlation Significance**:
+   ```
+   t = r * √[(n-2)/(1-r²)]
+   ```
+
+2. **Directional Accuracy**:
+   ```
+   DA = (1/n) * Σ[sign(y_actual) = sign(y_forecast)]
+   ```
+
+3. **Forecast Bias Test**:
+   ```
+   bias = mean(y_forecast - y_actual)
+   t_bias = bias / (std_error / √n)
+   ```
+
+### Model Comparison:
+The evaluator ranks models using composite scoring that considers:
+- Forecast accuracy (weighted by R², MAE)
+- Statistical significance (p-values, confidence levels)
+- Consistency across different time periods
+- Robustness to outliers and market volatility
+
+The ModelEvaluator ensures only statistically valid and practically useful
+models proceed to operational deployment.
 """
 
 import pandas as pd
@@ -337,7 +425,7 @@ class ModelEvaluator:
               f"Correlation: {metrics['correlation']:.4f}")
         
         t_test = self.evaluation_results['statistical_tests']
-        significance = "✓" if t_test['significant'] else "✗"
+        significance = "Yes" if t_test['significant'] else "No"
         print(f"Directional Accuracy: {metrics['directional_accuracy']:.1f}% | "
               f"Statistically Significant: {significance}")
 

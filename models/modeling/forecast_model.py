@@ -1,9 +1,70 @@
 """
 Forecasting Model - Main Orchestrator
 
-This module provides the main ForecastModel class that orchestrates all modeling components.
-It serves as the primary interface for the forecasting system while delegating specific
-tasks to specialized modules.
+## Overview
+This module provides the main ForecastModel class that orchestrates all modeling components
+within the HPI forecasting system. It serves as the primary interface for the forecasting
+system while delegating specific tasks to specialized modules, maintaining backward
+compatibility with legacy code while enabling modular architecture.
+
+## Function within the Model Pipeline
+The ForecastModel class serves as the central coordinator by:
+- Orchestrating configuration, statistics, forecasting, and evaluation components
+- Providing a unified interface for model initialization and operation
+- Maintaining backward compatibility with existing modeling workflows
+- Delegating specialized tasks to appropriate modular components
+- Managing the lifecycle of forecasting operations from setup to results
+
+## Inputs
+- **df**: Preprocessed DataFrame containing economic time series data
+  - House Price Index (HPI) values with calculated annualized returns
+  - Consumer Price Index (CPI) for inflation adjustments
+  - Nominal and real earnings data
+  - Mortgage rates and derived affordability metrics
+- **years**: Forecast horizon in years for annualized return calculations
+- **config_path**: Path to JSON configuration file containing model parameters
+- **use_mortgage_factor**: Boolean flag to incorporate mortgage affordability in ratios
+- **use_real_returns**: Boolean flag to use inflation-adjusted returns
+- **mean_valuation_ratio**: Optional override for long-term mean valuation ratio
+- **mean_earnings_growth**: Optional override for mean earnings growth rate
+
+## Outputs
+- **ForecastModel instance**: Configured and trained forecasting model containing:
+  - Calculated statistical parameters (mean ratios, growth rates, correlations)
+  - Model configuration settings and column mappings
+  - Forecasting capabilities for generating predictions
+  - Evaluation methods for performance assessment
+  - Serialization support for model persistence
+
+## Mathematical Formulation
+The orchestrator coordinates multiple mathematical components:
+
+### Core Model Structure:
+The ForecastModel implements mean reversion theory through its components:
+```
+E[R_t+n] = (1/n) * ln(μ_ratio / ratio_t) + μ_growth
+```
+
+Where:
+- `R_t+n`: Expected annualized return over n years
+- `ratio_t`: Current house price-to-earnings ratio
+- `μ_ratio`: Long-term mean valuation ratio (calculated by StatisticsCalculator)
+- `μ_growth`: Mean earnings growth rate (calculated by StatisticsCalculator)
+- `n`: Forecast horizon in years
+
+### Component Integration:
+1. **ModelConfiguration**: Manages column selection and parameter setup
+2. **StatisticsCalculator**: Computes historical statistics and relationships
+3. **ForecastingEngine**: Applies mathematical models for prediction
+4. **ModelEvaluator**: Calculates performance metrics and validation
+
+### Backward Compatibility:
+The orchestrator maintains legacy method signatures while internally delegating to
+specialized components, ensuring existing code continues to function while benefiting
+from the modular architecture improvements.
+
+The ForecastModel class provides a seamless interface that abstracts the complexity
+of the modular system while delivering enhanced functionality and maintainability.
 """
 
 import pandas as pd

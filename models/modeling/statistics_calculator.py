@@ -1,8 +1,100 @@
 """
 Statistics Calculator Module
 
-This module handles the calculation of statistical parameters and metrics
-for forecasting models, including mean values, correlations, and distributions.
+## Overview
+This module handles the calculation of statistical parameters and metrics for
+forecasting models, including mean values, correlations, distributions, and
+historical relationships. The StatisticsCalculator serves as the analytical
+foundation that extracts key statistical relationships from historical data
+to inform forecasting model parameters and validation procedures.
+
+## Function within the Model Pipeline
+The StatisticsCalculator serves as the analytical foundation by:
+- Computing historical statistical relationships between economic variables
+- Calculating mean reversion parameters for forecasting models
+- Determining volatility measures and uncertainty quantification
+- Providing correlation analysis between ratios and returns
+- Establishing baseline parameters for model calibration and validation
+
+## Inputs
+- **config**: ModelConfiguration instance providing:
+  - Data structure definitions and column mappings
+  - Model variant settings (mortgage factors, real returns)
+  - Forecast horizon specifications
+  - Parameter constraints and validation rules
+- **Historical Data**: Time series data from configuration including:
+  - House price-to-earnings ratios (nominal and mortgage-adjusted)
+  - Annualized returns (nominal and real)
+  - Earnings growth rates (nominal and real)
+  - Economic indicators and market conditions
+
+## Outputs
+- **Statistical Parameters**: Core forecasting parameters including:
+  - Mean valuation ratios for long-term equilibrium levels
+  - Mean earnings growth rates for trend calculations
+  - Standard deviations for uncertainty quantification
+  - Correlation coefficients for relationship strength
+- **Distribution Analysis**: Statistical distributions including:
+  - Return volatility measures and confidence intervals
+  - Earnings uncertainty parameters
+  - Historical range and percentile analysis
+- **Forecasting Parameters**: Calibrated model inputs including:
+  - Baseline volatility for return predictions
+  - Earnings uncertainty for forecast intervals
+  - Mean reversion speeds and equilibrium levels
+
+## Mathematical Formulation
+The StatisticsCalculator implements comprehensive statistical analysis:
+
+### Mean Statistics Calculation:
+```
+μ_ratio = (1/n) * Σ(ratio_t)
+μ_growth = (1/n) * Σ(growth_t)
+```
+
+Where:
+- `μ_ratio`: Mean valuation ratio over historical period
+- `μ_growth`: Mean earnings growth rate
+- `n`: Number of historical observations
+
+### Volatility Estimation:
+```
+σ_returns = √[(1/(n-1)) * Σ(return_t - μ_return)²]
+σ_earnings = √[(1/(n-1)) * Σ(growth_t - μ_growth)²]
+```
+
+### Correlation Analysis:
+```
+ρ = Cov(ratio_t, return_t+n) / (σ_ratio * σ_return)
+```
+
+Where:
+- `ρ`: Correlation coefficient between ratios and future returns
+- `Cov()`: Covariance function
+- `σ_ratio, σ_return`: Standard deviations of ratios and returns
+
+### Forecasting Parameter Synthesis:
+```
+baseline_volatility = √(σ_returns² + adjustment_factor²)
+earnings_uncertainty = σ_earnings * horizon_adjustment
+```
+
+### Statistical Validation:
+The calculator performs validation checks:
+- **Data Sufficiency**: Minimum observation requirements
+- **Stationarity Tests**: Statistical stability over time
+- **Outlier Detection**: Identification and treatment of extreme values
+- **Significance Testing**: Statistical significance of relationships
+
+### Distribution Analysis:
+```
+percentiles = quantile(data, [0.05, 0.25, 0.5, 0.75, 0.95])
+confidence_intervals = μ ± z_α/2 * (σ/√n)
+```
+
+The StatisticsCalculator provides the quantitative foundation that enables
+reliable parameter estimation and statistical validation for all forecasting
+operations within the modeling pipeline.
 """
 
 import pandas as pd

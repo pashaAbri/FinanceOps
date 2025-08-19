@@ -1,8 +1,82 @@
 """
 Model Configuration Module
 
-This module handles the setup and configuration of forecasting models,
-including parameter initialization and column selection logic.
+## Overview
+This module handles the setup and configuration of forecasting models, including
+parameter initialization, column selection logic, and model variant management.
+The ModelConfiguration class serves as the foundation for all forecasting operations
+by establishing the data structure, parameter settings, and operational context
+required for model execution.
+
+## Function within the Model Pipeline
+The ModelConfiguration serves as the setup and initialization component by:
+- Loading and parsing configuration files with model parameters
+- Determining appropriate data columns based on model variants
+- Setting up forecast horizons and time-dependent calculations
+- Managing model flags (mortgage factors, real returns) and their implications
+- Providing data validation and structure verification
+
+## Inputs
+- **df**: DataFrame containing preprocessed economic time series data
+  - House Price Index (HPI) values and calculated returns
+  - Consumer Price Index (CPI) for inflation calculations
+  - Nominal and real earnings data
+  - Mortgage rates and affordability metrics
+- **years**: Forecast horizon in years for return calculations
+- **config_path**: Path to JSON configuration file containing model parameters
+- **use_mortgage_factor**: Boolean flag to incorporate mortgage affordability
+- **use_real_returns**: Boolean flag to use inflation-adjusted calculations
+
+## Outputs
+- **ModelConfiguration instance**: Configured model setup containing:
+  - Column name mappings for ratio and return calculations
+  - Model description and identification keys
+  - Configuration parameters and variable definitions
+  - Data validation results and structure verification
+  - Setup parameters for downstream modeling components
+
+## Mathematical Formulation
+The configuration module establishes the mathematical framework parameters:
+
+### Column Selection Logic:
+The configuration determines appropriate data columns based on model variants:
+
+1. **Ratio Column Selection**:
+   ```
+   ratio_col = RATIO_MF if use_mortgage_factor else RATIO
+   ```
+
+2. **Return Column Selection**:
+   ```
+   return_col = REAL_RETURN if use_real_returns else NOMINAL_RETURN
+   ```
+
+3. **Growth Rate Selection**:
+   ```
+   growth_col = REAL_EARNINGS_GROWTH if use_real_returns else NOMINAL_EARNINGS_GROWTH
+   ```
+
+### Model Key Generation:
+Configuration generates unique model identifiers:
+```
+model_key = f"{years}y_mf{use_mortgage_factor}_real{use_real_returns}"
+```
+
+### Data Validation:
+The configuration validates data structure and completeness:
+- Verifies presence of required columns
+- Checks for sufficient historical data
+- Validates forecast horizon compatibility
+- Ensures data quality for statistical calculations
+
+### Parameter Management:
+Configuration loads and manages model parameters from JSON files:
+- Variable definitions and display names
+- Default values and constraints
+- Model-specific settings and overrides
+
+The ModelConfiguration class provides the foundational setup that enables
+consistent and reliable model initialization across all forecasting operations.
 """
 
 import pandas as pd
