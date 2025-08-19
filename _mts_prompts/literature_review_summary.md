@@ -16,7 +16,12 @@
 
 ## Expected Output Format
 
-The output should be a single comprehensive paragraph with a maximum of 500 words that covers the literature review summary for the model. The paragraph should be well-structured and flow logically from theoretical foundations through research background to industry best practices.
+The output should be a single comprehensive paragraph written in academic style that covers the literature review summary for the model. The paragraph should cite specific papers, authors, and sources to support the theoretical foundations, methodological approaches, and industry best practices. Use proper academic citations and reference specific research studies, journal articles, and authoritative sources that inform the model's design and implementation.
 
-**Word Limit:** Maximum 500 words
-**Format:** Single paragraph (no section headers or bullet points)
+**Word Count:** 250-500 words
+**Format:** Single academic paragraph with specific citations and references
+**Style Requirements:**
+- Use academic writing style with proper citations
+- Reference specific papers, authors, and publication years
+- Include journal names and authoritative sources
+- Flow logically from theoretical foundations through empirical research to practical applications
