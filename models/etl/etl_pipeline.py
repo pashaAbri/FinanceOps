@@ -1,8 +1,56 @@
 """
 ETL Pipeline Module for HPI Forecasting
 
-This module provides a complete Extract-Transform-Load (ETL) pipeline that combines
-data loading and preprocessing operations into a single, coherent workflow.
+This module provides a complete Extract-Transform-Load (ETL) pipeline that orchestrates
+the entire data preparation workflow for House Price Index (HPI) forecasting. It combines
+data extraction, transformation, and loading operations into a single, coherent pipeline
+with comprehensive monitoring, validation, and error handling.
+
+Pipeline Architecture:
+    The ETL pipeline follows a three-stage architecture:
+    
+    1. EXTRACT: Data loading from multiple CSV sources
+       - Economic indicators (CPI, earnings, mortgage rates)
+       - Housing market data (HPI time series)
+       - Automated data validation and quality checks
+    
+    2. TRANSFORM: Feature engineering and preprocessing
+       - Inflation adjustments and real value calculations
+       - Mortgage payment factor computations
+       - Growth rate and valuation ratio analysis
+       - Annualized return target variable creation
+    
+    3. LOAD: Final data preparation and optional persistence
+       - Data quality validation and reporting
+       - Optional export to CSV or other formats
+       - Integration with downstream modeling components
+
+Key Features:
+    - End-to-end data pipeline orchestration
+    - Comprehensive error handling and logging
+    - Data quality monitoring and validation
+    - Flexible configuration management
+    - Progress tracking and status reporting
+    - Modular design for easy maintenance and testing
+    - Optional data persistence and export capabilities
+
+Pipeline Benefits:
+    - Ensures data consistency across modeling workflows
+    - Provides centralized data quality monitoring
+    - Reduces code duplication and maintenance overhead
+    - Enables reproducible data preparation processes
+    - Facilitates debugging and troubleshooting
+    - Supports both batch and interactive execution modes
+
+The HPIETLPipeline class serves as the main orchestrator, coordinating the
+DataLoader and HPIPreprocessor components while providing comprehensive
+monitoring, validation, and reporting capabilities.
+
+Example Usage:
+    >>> from models.etl.etl_pipeline import HPIETLPipeline
+    >>> pipeline = HPIETLPipeline()
+    >>> results = pipeline.run_full_pipeline(years=5)
+    >>> print(f"Pipeline completed: {results['final_data'].shape}")
 """
 
 import pandas as pd

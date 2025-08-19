@@ -1,6 +1,44 @@
 """
-Data preprocessing module for HPI forecasting.
-This module handles data cleaning, feature engineering, and preparation.
+Data Preprocessing Module for HPI Forecasting
+
+This module provides comprehensive data preprocessing and feature engineering
+capabilities for House Price Index (HPI) forecasting models. It transforms
+raw economic data into model-ready features through advanced feature engineering,
+mathematical transformations, and domain-specific calculations.
+
+Key Features:
+    - Advanced feature engineering for economic time series
+    - Inflation adjustments and real value calculations
+    - Mortgage payment factor computations
+    - Valuation ratio analysis for housing affordability
+    - Growth rate calculations for trend analysis
+    - Annualized return computations for forecasting targets
+    - Comprehensive data pipeline orchestration
+
+Feature Engineering Capabilities:
+    - Real (inflation-adjusted) House Price Index calculation
+    - Mortgage payment factors based on interest rates and loan terms
+    - Personal earnings growth rates (nominal and real)
+    - Housing valuation ratios (price-to-income, mortgage-adjusted)
+    - Forward-looking annualized returns for model targets
+    - Time series alignment and missing data handling
+
+The HPIPreprocessor class implements domain knowledge about housing markets
+and economic relationships, creating meaningful features that capture the
+fundamental drivers of house price movements including affordability,
+financing costs, and economic growth trends.
+
+Mathematical Transformations:
+    - Compound annual growth rate (CAGR) calculations
+    - Mortgage payment factor: years * rate / (1 - 1/(1+rate)^years)
+    - Real values: nominal_value / price_index
+    - Valuation ratios: price_metric / income_metric
+
+Example Usage:
+    >>> from models.etl.preprocessor import HPIPreprocessor
+    >>> preprocessor = HPIPreprocessor()
+    >>> processed_data = preprocessor.preprocess_full_pipeline(raw_data, years=5)
+    >>> print(f"Generated {processed_data.shape[1]} features")
 """
 
 import pandas as pd

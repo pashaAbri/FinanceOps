@@ -1,6 +1,28 @@
 """
-Data loading module for HPI forecasting.
-This module handles loading and basic validation of data files.
+Data Loading Module for HPI Forecasting
+
+This module provides comprehensive data loading capabilities for economic and housing
+market data used in House Price Index (HPI) forecasting. It handles the extraction
+and initial processing of time series data from various CSV sources.
+
+Key Features:
+    - Centralized data loading interface for all economic indicators
+    - Automatic data validation and quality checks
+    - Support for multiple data formats and frequencies
+    - Built-in resampling and interpolation capabilities
+    - Standardized naming conventions and data structures
+
+Data Sources Supported:
+    - Consumer Price Index (CPI) data with inflation adjustments
+    - House Price Index (HPI) as the primary forecasting target
+    - Median weekly earnings (both nominal and real)
+    - 30-year fixed mortgage rates with frequency conversion
+    - Additional economic indicators as configured
+
+The DataLoader class serves as the primary interface for data extraction,
+handling file I/O, format standardization, and basic data quality validation.
+All loaded data is returned as pandas Series with proper datetime indexing
+for seamless integration with downstream preprocessing and modeling components.
 """
 
 import pandas as pd
