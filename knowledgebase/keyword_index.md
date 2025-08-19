@@ -8,3 +8,4 @@
 | MTS_MODEL_STEP_2              | MODEL      | STEP_2                  |
 | MTS_MODEL_STEP_3              | MODEL      | STEP_3                  |
 | MTS_MODEL_WORKFLOW            | MODEL      | WORKFLOW                |
+| MTS_TEMPLATE                  | TEMPLATE   | TEMPLATE                |
