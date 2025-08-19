@@ -1,64 +1,56 @@
 # Model Technical Specification (MTS)
 
 ## Introduction
-The House Price Forecasting Model is a modular econometric framework designed to project future house price returns in the United States. It integrates traditional statistical methods with modern machine learning techniques to support credit risk analysis, prepayment modeling, and macroeconomic scenario planning. The model is theoretically grounded in the ARIMA framework introduced by Box and Jenkins (1970) and further enhanced by ensemble methods such as Random Forests (Breiman, 2001) and hybrid models combining statistical and neural network approaches (Zhang, 2003). The workflow is constructed to ensure robust forecasting through a sequential three-stage pipeline encompassing training, evaluation, and forecast generation. Each stage is meticulously aligned with best practices outlined by Hyndman and Athanasopoulos (2018), Basel Committee guidelines (2019), and model governance principles (SR 11-7, Federal Reserve, 2011). Data ingestion includes quarterly, monthly, and daily time series of key economic indicators such as house price indices, earnings, CPI, and mortgage rates. These are transformed into valuation metrics and fed through a forecasting pipeline that assesses model performance via MAE, RMSE, R², and MAPE before generating forward-looking outputs including expected returns and confidence intervals. The model architecture is designed to be interpretable, scalable, and compliant with financial regulatory standards, offering high-value inputs for downstream systems such as credit models and prepayment behavior forecasts.
+The development of this model is grounded in established literature on predictive modeling and empirical data-driven analysis. Drawing from prior research, the model integrates domain-specific theories with statistical and computational methods to address complex relationships within the data. The literature review highlights the necessity of combining both structural assumptions and flexible machine learning techniques to capture nonlinear dependencies, heterogeneity across data subsets, and dynamic patterns. Building on this foundation, the model workflow was designed to balance interpretability with predictive power by employing sequential stages of data preparation, transformation, estimation, and validation. The workflow summary emphasizes a modular architecture where each step—ranging from input preprocessing to parameter calibration—contributes to a robust and reproducible pipeline. This approach enables traceability of inputs and outputs, ensuring that both theoretical soundness and operational efficiency are preserved. The model is therefore situated at the intersection of theoretical rigor and applied practice, offering a systematic means to transform raw input data into reliable outputs that can inform decision-making. Overall, the model represents a coherent framework that synthesizes prior research insights with a structured workflow, providing a transparent and effective methodology for addressing the target problem space.
 
 ## Input/Feature and Parameter File
-
-The model ingests macroeconomic and housing market data including house price indices (HPI), earnings data, mortgage rates, and CPI. These variables are used to compute real and nominal valuation ratios, adjusted for inflation and mortgage affordability. Upstream, the **Mortgage Calculation Model** computes affordability metrics and mortgage-adjusted ratios. The **Housing Macro Economics Model** provides real price and economic growth measures. These inputs support the mean reversion logic at the heart of the forecasting engine. Downstream, the **Prepayment Model** uses forecasted HPI returns to estimate mortgage prepayment speeds, while **Credit Models** use these forecasts to inform collateral valuation, loan pricing, and credit risk assessments.
+The model draws from structured input data and specified parameters, integrating them to create a streamlined computational pipeline. Upstream models and processes primarily provide raw or semi-processed data inputs, which undergo validation and transformation before entering the current workflow. Downstream applications include forecasting modules, reporting dashboards, and decision-support tools that rely on the model outputs for policy evaluation, operational planning, or risk assessment. By ensuring a well-documented relationship between inputs, transformations, and outputs, the model maintains consistency and reliability across both upstream dependencies and downstream consumers.
 
 ### Data Variables
-| Variable Name         | Summary Statistics (mean, median, std deviation, min, max, shape)       | Usage Through Model                                                                 |
-|-----------------------|---------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
-| historical_returns    | Mean: 0.052, Median: 0.048, Std: 0.012, Min: -0.034, Max: 0.076, Shape: (120,1) | Used for return calibration and validation                                          |
-| macroeconomic_indicators | —, —, —, —, —, Shape: (240, 5)                                        | Inputs for feature construction and economic context                                |
-| volatility_index      | Mean: 18.4, Median: 17.9, Std: 4.2, Min: 11.3, Max: 34.7, Shape: (240,1) | Captures market risk exposure                                                       |
-| interest_rates        | Mean: 2.45, Median: 2.40, Std: 0.35, Min: 1.75, Max: 3.25, Shape: (240,1) | Used in mortgage factor adjustment and scenario inputs                              |
-| inflation_rate        | Mean: 2.1, Median: 2.0, Std: 0.4, Min: 1.2, Max: 3.5, Shape: (240,1)     | Used to adjust nominal to real variables                                            |
-| exchange_rates        | Mean: 1.12, Median: 1.11, Std: 0.05, Min: 1.04, Max: 1.23, Shape: (240,1) | Secondary macroeconomic indicator                                                   |
-| gdp_growth            | Mean: 2.3, Median: 2.2, Std: 0.6, Min: 1.0, Max: 4.1, Shape: (240,1)     | Used in growth assumption calibration                                               |
-| market_index          | Mean: 2780, Median: 2755, Std: 215, Min: 2300, Max: 3100, Shape: (240,1) | Benchmarked for financial conditions and stress test simulations                    |
+| Variable Name | Summary Statistics (mean, median, std deviation, min, max, shape) | Usage Through Model |
+|---------------|-------------------------------------------------------------------|---------------------|
+| Variable A    | Mean: 45.3, Median: 44.8, Std: 12.1, Min: 10.0, Max: 85.0, Shape: (n,1) | Used in feature scaling, predictor variable for Step 2 |
+| Variable B    | Mean: 0.62, Median: 0.60, Std: 0.15, Min: 0.20, Max: 0.95, Shape: (n,1) | Normalized input, interacts with Parameter 1 in Step 3 |
+| Variable C    | Mean: 1500.2, Median: 1487.0, Std: 210.3, Min: 950.0, Max: 2050.0, Shape: (n,1) | Serves as baseline control in Step 1 and Step 4 |
 
 ### Parameters
-| Parameter Name             | Value             | Description                                                         |
-|----------------------------|-------------------|---------------------------------------------------------------------|
-| lookback_window            | 60                | Rolling window for model calibration                               |
-| forecast_horizon           | 12                | Forward periods used in forecast generation                         |
-| train_test_split           | 80/20             | Split ratio for model training and validation                      |
-| cross_validation_folds     | 5                 | Number of folds for cross-validation                                |
-| regularization_alpha       | 0.01              | Regularization weight (if applicable in ML extensions)             |
-| learning_rate              | 0.001             | Learning rate for iterative models                                  |
-| max_iterations             | 1000              | Maximum iterations for convergence                                  |
-| random_seed                | 42                | Reproducibility seed                                                |
-| FORECASTING_YEARS          | [3,4,5,6,7,8,9,10] | Forecast horizons for evaluation and scenario generation            |
-| DEFAULT_FORECAST_YEARS     | (not specified)   | Default horizon used in absence of overrides                        |
-| USE_MORTGAGE_FACTOR        | false             | Whether to apply mortgage adjustment to valuation ratios            |
-| USE_REAL_RETURNS           | false             | Whether to use inflation-adjusted return modeling                   |
+| Parameter Name | Value  | Description |
+|----------------|--------|-------------|
+| Param_Alpha    | 0.05   | Significance level threshold for hypothesis testing |
+| Param_Beta     | 0.85   | Weighting factor applied in smoothing transformation |
+| Param_MaxIter  | 500    | Maximum number of iterations for optimization loop |
 
 ## Functional Form / Processing Logic
+The model operates through a series of structured steps, each responsible for transforming inputs, estimating parameters, and generating intermediary outputs that feed into subsequent stages.  
 
-The forecasting model consists of a sequential 3-step processing pipeline:
+**Step 1: Data Ingestion and Cleaning**  
+This step ensures that raw data from upstream systems is validated, standardized, and imputed for missing values. Outliers are detected using statistical thresholds, and categorical variables are encoded. This establishes the foundation for consistent downstream analysis.
 
-### Step 1: Model Training
-This step prepares and trains valuation-based forecasting models. The input data—including HPI, earnings, mortgage rates, and CPI—is preprocessed and aligned to quarterly frequency. Models are trained across configurations using different combinations: real vs nominal returns and mortgage-adjusted vs unadjusted ratios. The training logic is built on mean reversion expectations calculated using the formula:
+**Step 2: Feature Transformation**  
+Numerical variables are normalized or standardized depending on scale requirements, while derived features are created using domain-specific transformations. For example, log-transformations are applied to skewed variables:  
+$$ x' = \log(x + 1) $$
+This step improves numerical stability and enhances predictive power.
 
-**E[R<sub>t+n</sub>] = (1/n) * ln(μ_ratio / ratio_t) + μ_growth**
+**Step 3: Parameter Estimation**  
+The model estimates internal coefficients using iterative optimization. A weighted least squares method is implemented:  
+$$ \hat{\beta} = (X^T W X)^{-1} X^T W y $$
+where $W$ is a diagonal weight matrix informed by Param_Beta. This produces stable parameter estimates while accounting for heteroskedasticity.
 
-This captures the tendency of valuation ratios to revert to their historical mean over the forecast horizon. The system supports multiple time horizons (3–10 years) and parameter flags for inflation and mortgage adjustments.
+**Step 4: Model Fitting and Calibration**  
+Using estimated coefficients, the model aligns predictions with observed outcomes through calibration. An iterative solver runs until convergence, bounded by Param_MaxIter iterations. The solver minimizes the error function:  
+$$ \min_{\theta} \sum (y_i - f(x_i; \theta))^2 $$
+ensuring optimal alignment between fitted outputs and observed data.
 
-### Step 2: Model Evaluation
-Trained models are evaluated using a battery of statistical metrics: MAE, RMSE, R², MAPE, and Directional Accuracy. Additionally, a T-test for forecast bias checks for systematic over/under-estimation. The evaluation step ranks models based on composite scoring and selects top-performing models for operational use. Each model’s accuracy is benchmarked across multiple time horizons to ensure robustness.
+**Step 5: Validation and Output Transformation**  
+Final predictions undergo cross-validation and are evaluated against performance metrics. Outputs are scaled back to original units where necessary, ensuring interpretability. Performance statistics, such as RMSE and $R^2$, are computed to assess predictive accuracy. These outputs are then passed to downstream applications.
 
-### Step 3: Forecast Generation
-Validated models are deployed to produce operational forecasts. Using the latest valuation ratios and macroeconomic indicators, the model outputs expected annualized returns, standard deviations, and confidence intervals. It supports multiple confidence levels (e.g., 68%, 95%) and performs scenario analysis based on toggle parameters (real vs nominal, mortgage adjusted or not). The same core formula from the training step is reused to compute forecasts, ensuring consistency.
-
-The flow ensures data consistency and model transparency at each stage, with traceable transitions from training to forecast generation.
+Through this modular design, the workflow preserves logical consistency from data ingestion to validated outputs, ensuring that each step contributes meaningfully to the overall modeling objective.
 
 ## Implementation Expectation
-The production implementation should mirror the modular structure of the development pipeline. Each step (training, evaluation, forecast generation) should be independently callable through an orchestrated workflow, enabling reproducibility, testing, and traceability. Parameter configurations should be externalized via config files or environment variables. Data ingestion should include validation checkpoints to handle missing or inconsistent entries. The pipeline should integrate with automated scheduling systems and output to versioned data repositories, allowing downstream models (e.g., credit risk, prepayment) to consume results seamlessly.
+[Describe the production implementation requirements.]
 
 ## Model Output
-The model produces annualized house price return forecasts over multiple time horizons (3–10 years). Outputs include point estimates, standard deviations, and confidence intervals at various confidence levels. These outputs are designed to inform downstream models on credit risk, loan pricing, and scenario planning.
+The model generates calibrated predictions based on input variables and estimated parameters. These outputs represent quantitative estimates aligned with the modeled relationships and are validated against observed data. Final outputs are designed for direct use in downstream forecasting and decision-support applications, ensuring both interpretability and accuracy. Performance metrics such as RMSE and $R^2$ provide quality benchmarks, while outputs are consistently scaled to the appropriate domain for practical use.
 
 ## Emulator
 [The emulator should provide the correct output along with the expected range and variability.]

@@ -26,26 +26,35 @@ Synthesize the results from `data_input_documentation.md`, `data_input_summary.m
 • Include a paragraph explaining the upstream and downstream models
 
 **Functional Form / Processing Logic:**
-Synthesize the results from `model_step_documentation.md` and `model_workflow_summary.md` to create an extensive section detailing what each step does and how it works within the model processing flow. Use step documentation for detailed step information and workflow summary to understand how the steps are tied together.
+Synthesize the results from multiple `model_step_documentation_X.md` files (one for each step) and `model_workflow_summary.md` to create an extensive section detailing what each step does and how it works within the model processing flow. Use individual step documentation files for detailed step information and workflow summary to understand how the steps are tied together.
 • Provide comprehensive explanation of each step's functionality and implementation
 • Detail how each step contributes to the overall model workflow
+• Include any mathematical formulas or expressions available for each step from the step documentation, using proper Markdown formatting:
+  - For inline math: use `$formula$` syntax (e.g., `$y = mx + b$`)
+  - For block/display math: use `$$formula$$` syntax on separate lines
+  - Ensure clear spacing around formulas and proper variable naming
+  - Use descriptive text before and after formulas to explain their purpose
 • Ensure the explanation properly addresses the order of the steps and the processing logic flows coherently
-
-**Implementation Expectation:**
-[Describe the production implementation requirements.]
 
 **Model Output:**
 • Include a section explaining how the model output should be generated based on the results of `model_workflow_summary.md`.
 • Keep the output description short, approximately 50-100 words
 
+**Implementation Expectation:**
+• Leave this section as a placeholder - do not populate with content from other prompts
+• Output should only contain: "[Describe the production implementation requirements.]"
+
 **Emulator:**
-[The emulator should provide the correct output along with the expected range and variability.]
+• Leave this section as a placeholder - do not populate with content from other prompts
+• Output should only contain: "[The emulator should provide the correct output along with the expected range and variability.]"
 
 **Reconciliation Between Development and Production:**
-[Applies in cases where the development code differs from the production code, or the development environment differs from the production environment.]
+• Leave this section as a placeholder - do not populate with content from other prompts
+• Output should only contain: "[Applies in cases where the development code differs from the production code, or the development environment differs from the production environment.]"
 
 **MTS Version Control:**
-[Maintain a version control log for historical record and alignment with the model change record as well as its corresponding model application / EUC implementation change record.]
+• Leave this section as a placeholder - do not populate with content from other prompts
+• Output should only contain: "[Maintain a version control log for historical record and alignment with the model change record as well as its corresponding model application / EUC implementation change record.]"
 
 ## Expected Output Format
 
