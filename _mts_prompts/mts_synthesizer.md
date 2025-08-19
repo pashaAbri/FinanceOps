@@ -30,12 +30,14 @@
    - Parameter file specifications and usage
 
 **Section 3.4 - Functional Flow/Workflow Logic:**
-1. Receive results from `model_step_documentation.md` containing individual model steps documentation
-2. Synthesize step documentation results into a comprehensive workflow section covering:
-   - Sequential flow of model processes
-   - Detailed description of each model step
+1. Receive results from `model_step_documentation.md` containing individual model steps documentation - **CRITICAL: Use this for detailed documentation of EACH individual step in the model**
+2. Receive results from `model_workflow_summary.md` containing overall workflow approach - **CRITICAL: Use this to understand how different steps work together and the overall process flow**
+3. Synthesize both step-by-step documentation and workflow summary results into a comprehensive workflow section covering:
+   - Sequential flow of model processes (using workflow summary for overall flow)
+   - Detailed description of each individual model step (using step documentation for specifics)
    - Input-output mappings for each step
    - Integration points and data flow between steps
+   - How individual steps connect to form the complete workflow
 
 **Instructions:**
 • Receive and analyze the results from the relevant specialized prompts for each section.
